@@ -1,0 +1,510 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Shadow Fury — BabylonJS Bike</title>
+  <style>
+    html,body { height:100%; margin:0; overflow:hidden; background:#0b0b0f; }
+    #renderCanvas { width:100%; height:100%; touch-action: none; display:block; }
+  </style>
+</head>
+<body>
+  <script src="https://cdn.babylonjs.com/babylon.js"></script>
+<script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+<script src="https://cdn.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
+  <canvas id="renderCanvas"></canvas>  <!-- BabylonJS CDN --> 
+  <script>
+  const canvas = document.getElementById('renderCanvas');
+  const engine = new BABYLON.Engine(canvas, true);
+
+  const createScene = function () {
+    const scene = new BABYLON.Scene(engine);
+    scene.clearColor = new BABYLON.Color3(0.4,0.4,0.4);
+
+    const camera = new BABYLON.ArcRotateCamera('cam', BABYLON.Tools.ToRadians(80), BABYLON.Tools.ToRadians(60), 12, new BABYLON.Vector3(0,1.2,0));
+    camera.attachControl(canvas, true);
+
+    const light = new BABYLON.HemisphericLight('hemi', new BABYLON.Vector3(0,1,0), scene);
+    light.intensity = 0.9;
+
+    // Parent bike node
+    const bike = new BABYLON.TransformNode('bike', scene);
+
+    // Materials
+    const bodyMat = new BABYLON.StandardMaterial('bodyMat', scene);
+    bodyMat.diffuseColor = new BABYLON.Color3(0.1,0.1,0.1);
+
+    const wheelMat = new BABYLON.StandardMaterial('wheelMat', scene);
+    wheelMat.diffuseColor = new BABYLON.Color3(0.05,0.05,0.05);
+
+    
+    
+    function createBody(){
+      // Create a material for rods
+const wheelMat = new BABYLON.StandardMaterial("wheelMat", scene);
+wheelMat.diffuseColor = new BABYLON.Color3(0.1, 0.1, 0.1);
+const wheelMat22 = new BABYLON.StandardMaterial("wheelMat", scene);
+wheelMat22.diffuseColor = new BABYLON.Color3(1, 0, 0);
+
+
+const rightr = BABYLON.MeshBuilder.CreateCylinder("frontWheel", {
+    diameter: 0.2,
+    height: 2,
+    tessellation: 60
+}, scene);
+rightr.rotation.z = Math.PI / 6;  // stand like bike wheel
+rightr.position = new BABYLON.Vector3(1.3, 1.3, 0.25);
+rightr.material = wheelMat;
+
+
+const leftr = BABYLON.MeshBuilder.CreateCylinder("backWheel", {
+    diameter: 0.2,
+    height: 2,
+    tessellation: 60
+}, scene);
+leftr.rotation.z = Math.PI / 6;  // stand like bike wheel
+leftr.position = new BABYLON.Vector3(1.3, 1.3, -0.25);
+leftr.material = wheelMat;
+      
+      
+      const rightr1 = BABYLON.MeshBuilder.CreateCylinder("frontWheel", {
+    diameter: 0.3,
+    height: 0.8,
+    tessellation: 60
+}, scene);
+rightr1.rotation.z = Math.PI / 6;  // stand like bike wheel
+rightr1.position = new BABYLON.Vector3(1.15, 1.6, 0.25);
+rightr1.material = wheelMat22;
+
+
+const leftr1 = BABYLON.MeshBuilder.CreateCylinder("backWheel", {
+    diameter: 0.3,
+    height: 0.8,
+    tessellation: 60
+}, scene);
+leftr1.rotation.z = Math.PI / 6;  // stand like bike wheel
+leftr1.position = new BABYLON.Vector3(1.15, 1.6, -0.25);
+leftr1.material = wheelMat22;
+      
+      const cr = BABYLON.MeshBuilder.CreateCylinder("backWheel", {
+    diameter: 0.2,
+    height: 0.8,
+    tessellation: 60
+}, scene);
+cr.rotation.x = Math.PI/2;  // stand like bike wheel
+cr.position = new BABYLON.Vector3(1.7, 0.5, 0);
+cr.material = wheelMat22;
+      
+      // Create a cube named bikeh
+const bikeh = BABYLON.MeshBuilder.CreateBox("bikeh", {
+    size: 1   // you can change to width, height, depth separately if needed
+}, scene);
+
+// Position it above ground
+bikeh.position = new BABYLON.Vector3(0.9, 2.1, 0);
+bikeh.rotation = new BABYLON.Vector3(0,0,Math.PI/6);
+bikeh.scaling = new BABYLON.Vector3(0.5, 0.3, 0.8);
+
+// Give it a simple material
+const bikeMat = new BABYLON.StandardMaterial("bikeMat", scene);
+bikeMat.diffuseColor = new BABYLON.Color3(0.2, 0.2, 0.2); // blue cube
+bikeh.material = bikeMat;
+      
+      
+      const bikeh1 = BABYLON.MeshBuilder.CreateBox("bikeh", {
+    size: 1   // you can change to width, height, depth separately if needed
+}, scene);
+
+// Position it above ground
+bikeh1.position = new BABYLON.Vector3(0.9, 2.1, 0);
+bikeh1.rotation = new BABYLON.Vector3(0,0,Math.PI/6);
+bikeh1.scaling = new BABYLON.Vector3(0.3, 0.35, 0.75);
+
+// Give it a simple material
+const bikeMat1 = new BABYLON.StandardMaterial("bikeMat", scene);
+bikeMat1.diffuseColor = new BABYLON.Color3(0, 0.2, 0.2); // blue cube
+bikeh1.material = bikeMat1;
+      
+      
+      // Outer cylinder (headlight body)
+const headlightBody = BABYLON.MeshBuilder.CreateCylinder("headlightBody", {
+    diameter: 0.6,   // overall size
+    height: 0.3,     // depth
+    tessellation: 60
+}, scene);
+headlightBody.rotation.z = Math.PI / 2; // facing forward
+headlightBody.position = new BABYLON.Vector3(1.2, 2,0); // adjust as needed
+
+const bodyMat = new BABYLON.StandardMaterial("bodyMat", scene);
+bodyMat.diffuseColor = new BABYLON.Color3(0.1, 0.1, 0.1); // black/metal
+headlightBody.material = wheelMat22;
+
+// Inner cylinder (glass/lens)
+const headlightGlass = BABYLON.MeshBuilder.CreateCylinder("headlightGlass", {
+    diameter: 0.5,  // slightly smaller
+    height: 0.05,    // very thin
+    tessellation: 60
+}, scene);
+headlightGlass.rotation.z = Math.PI / 2;
+headlightGlass.position = new BABYLON.Vector3(1.39, 2, 0); // slightly forward
+
+const glassMat = new BABYLON.StandardMaterial("glassMat", scene);
+glassMat.diffuseColor = new BABYLON.Color3(1, 1, 0.7);   // yellowish glass
+glassMat.emissiveColor = new BABYLON.Color3(1, 1, 0.3); // glowing effect
+glassMat.alpha = 0.8; // semi-transparent
+headlightGlass.material = glassMat;
+      
+      
+   // ===== Handlebar main rod =====
+const handleRod = BABYLON.MeshBuilder.CreateCylinder("handleRod", {
+    diameter: 0.15,   // thickness of rod
+    height: 2.5,     // length of rod
+    tessellation: 32
+}, scene);
+handleRod.rotation.x = Math.PI / 2;   // make it horizontal
+handleRod.position = new BABYLON.Vector3(1, 2.2, 0);  // place above front wheel
+
+const handleMat = new BABYLON.StandardMaterial("handleMat", scene);
+handleMat.diffuseColor = new BABYLON.Color3(0.2, 0.2, 0.2); // dark gray metal
+handleRod.material = handleMat;
+
+// ===== Handle grips (both sides) =====
+function createGrip(name, zPos) {
+    const grip = BABYLON.MeshBuilder.CreateCylinder(name, {
+        diameter: 0.2, // slightly thicker than rod
+        height: 0.5,   // grip length
+        tessellation: 32
+    }, scene);
+    grip.rotation.x = Math.PI / 2;
+    grip.position = new BABYLON.Vector3(1, 2.2, zPos);
+    grip.material = new BABYLON.StandardMaterial("gripMat", scene);
+    grip.material.diffuseColor = new BABYLON.Color3(0, 0, 0); // black rubber
+    return grip;
+}
+
+const leftGrip  = createGrip("leftGrip", 1);
+const rightGrip = createGrip("rightGrip",  -1);
+
+// ===== Brake levers (flat pieces under grips) =====
+function createBrake(name, zPos) {
+    const brake = BABYLON.MeshBuilder.CreateBox(name, {
+        width: 0.07,
+        height: 0.6,
+        depth: 0.02
+    }, scene);
+    brake.position = new BABYLON.Vector3(1.2, 2.2, zPos);
+    brake.rotation.x = Math.PI / 2; // tilt downward
+    brake.material = new BABYLON.StandardMaterial("brakeMat", scene);
+    brake.material.diffuseColor = new BABYLON.Color3(0.8, 0.8, 0.8); // silver
+    return brake;
+}
+
+const leftBrake  = createBrake("leftBrake", 1);
+const rightBrake = createBrake("rightBrake",  -1);   
+      
+      
+      function createBrake1(name1, zPos1) {
+    const brake = BABYLON.MeshBuilder.CreateBox(name, {
+        width: 0.07,
+        height: 0.3,
+        depth: 0.02
+    }, scene);
+    brake.position = new BABYLON.Vector3(1.1, 2.2, zPos1);
+    brake.rotation.z = Math.PI / 2; // tilt downward
+    brake.material = new BABYLON.StandardMaterial("brakeMat", scene);
+    brake.material.diffuseColor = new BABYLON.Color3(0.8, 0.8, 0.8); // silver
+    return brake;
+}
+
+const leftBrake1  = createBrake1("leftBrake", 0.7);
+const rightBrake1 = createBrake1("rightBrake",  -0.7);   
+      
+      const bodyMat1 = new BABYLON.StandardMaterial('bodyMat', scene);
+    bodyMat1.diffuseColor = new BABYLON.Color3(0.1,0.1,0.1);
+
+      // Tank / seat
+    const tank = BABYLON.MeshBuilder.CreateCylinder('tank',{diameterTop:0.4, diameterBottom:0.9, height:2, tessellation:24}, scene);
+    
+    tank.rotation.z = Math.PI/2;
+    tank.position = new BABYLON.Vector3(0.3,1.6,0);
+    tank.scaling = new BABYLON.Vector3(1,0.5,0.9);
+    tank.material = wheelMat22;
+
+      // Basic body shape
+    const bodyMain = BABYLON.MeshBuilder.CreateBox('bodyMain',{width:2.6, height:0.5, depth:1.0}, scene);
+    bodyMain.parent = bike;
+    bodyMain.position = new BABYLON.Vector3(0,1.5,0);
+    bodyMain.scaling = new BABYLON.Vector3(0.7,1.4,0.7);
+      bodyMain.material = wheelMat22;
+
+      // Create a sphere
+const sphere = BABYLON.MeshBuilder.CreateSphere("mySphere", {
+    diameter: 1,     // size of sphere
+    segments: 32     // smoothness
+}, scene);
+
+// Position the sphere
+sphere.position = new BABYLON.Vector3(-0.7, 1.7, 0);
+sphere.scaling = new BABYLON.Vector3(1.4, 0.7, 0.7);
+// Add material
+const sphereMat = new BABYLON.StandardMaterial("sphereMat", scene);
+sphereMat.diffuseColor = new BABYLON.Color3(0.2, 0.2, 0.2); // red
+sphere.material = sphereMat;
+      
+      // Create a box
+const box = BABYLON.MeshBuilder.CreateBox("myBox", {
+    width: 0.4,    // left-right size
+    height: 1.5,   // up-down size
+    depth: 0.8     // front-back size
+}, scene);
+
+// Position the box
+box.position = new BABYLON.Vector3(-1.3, 1.7, 0);
+box.rotation = new BABYLON.Vector3(0,0,Math.PI/2.7);
+// Add material
+const boxMat = new BABYLON.StandardMaterial("boxMat", scene);
+boxMat.diffuseColor = new BABYLON.Color3(0.2, 0.2, 0.2); // blueish
+box.material = wheelMat22;
+      
+      
+      // ===== Engine Base =====
+const engineBase = BABYLON.MeshBuilder.CreateBox("engineBase", {
+    width: 0.8,
+    height: 0.5,
+    depth: 0.6
+}, scene);
+engineBase.position = new BABYLON.Vector3(0, 1, 0);
+
+const engineMat = new BABYLON.StandardMaterial("engineMat", scene);
+engineMat.diffuseColor = new BABYLON.Color3(0.2, 0.2, 0.2); // dark metal
+engineBase.material = engineMat;
+
+// ===== Cylinders (pistons) =====
+function createPiston(name, xPos, yPos, zPos) {
+    const piston = BABYLON.MeshBuilder.CreateCylinder(name, {
+        diameter: 0.2,
+        height: 1,
+        tessellation: 32
+    }, scene);
+    piston.rotation.z = -Math.PI / 10; // horizontal
+    piston.position = new BABYLON.Vector3(xPos, yPos, zPos);
+    piston.material = engineMat;
+    return piston;
+}
+
+const piston1 = createPiston("piston1", 0.5, 0.7, 0.15);
+const piston2 = createPiston("piston2", 0.5, 0.7, -0.15);
+
+// ===== Rounded caps (engine tops) =====
+function createCap(name, xPos, yPos, zPos) {
+    const cap = BABYLON.MeshBuilder.CreateSphere(name, {
+        diameter: 0.8,
+        segments: 16
+    }, scene);
+    cap.position = new BABYLON.Vector3(xPos, yPos, zPos); // on top of piston
+    cap.material = engineMat;
+    return cap;
+}
+
+const cap1 = createCap("cap1", -0.2, 0.5, 0);
+const cap2 = createCap("cap2", 0.2, 0.5, 0);
+
+// ===== Pipes / exhaust (small cylinders) =====
+function createPipe(name, xPos, yPos, zPos) {
+    const pipe = BABYLON.MeshBuilder.CreateCylinder(name, {
+        diameter: 0.3,
+        height: 2.5,
+        tessellation: 16
+    }, scene);
+    pipe.rotation.z = Math.PI / 2; // horizontal
+      // angle around
+    pipe.position = new BABYLON.Vector3(xPos, yPos, zPos);
+    pipe.material = engineMat;
+    return pipe;
+}
+
+const pipe1 = createPipe("pipe1", -0.8, 0.5, -0.4);
+const pipe2 = createPipe("pipe2", -0.8, 0.5, 0.4);
+      
+      
+      // ===== Engine Base (box) =====
+const engineBase1 = BABYLON.MeshBuilder.CreateBox("engineBase", {
+    width: 0.9,
+    height: 0.5,
+    depth: 0.65
+}, scene);
+engineBase1.position = new BABYLON.Vector3(-0.3, 1, 0);
+
+const baseMat = new BABYLON.StandardMaterial("baseMat", scene);
+baseMat.diffuseColor = new BABYLON.Color3(0.2, 0.2, 0.2); // dark metal
+engineBase.material = baseMat;
+
+// ===== Piston (cylinder) =====
+const piston11 = BABYLON.MeshBuilder.CreateCylinder("piston", {
+    diameter: 0.6,
+    height: 1.1,
+    tessellation: 32
+}, scene);
+piston11.rotation.x = Math.PI/2; // horizontal piston
+piston11.position = new BABYLON.Vector3(0.3, 0.6, 0); // slightly above engine base
+
+const pistonMat1 = new BABYLON.StandardMaterial("pistonMat", scene);
+pistonMat1.diffuseColor = new BABYLON.Color3(0.2, 0.2, 0.2); // slightly lighter metal
+piston11.material = pistonMat1;
+      
+      
+      // Create a thin box
+const thinBox = BABYLON.MeshBuilder.CreateBox("thinBox", {
+    width: 0.7,    // left-right
+    height: 0.2, // very thin (thickness)
+    depth: 0.7  // front-back
+}, scene);
+
+// Position the thin box
+thinBox.position = new BABYLON.Vector3(-2.2, 2, 0);
+
+// Add material
+const thinMat = new BABYLON.StandardMaterial("thinMat", scene);
+thinMat.diffuseColor = new BABYLON.Color3(0.4, 0.4, 0.4); // gray metal
+thinBox.material = thinMat;
+      
+      
+    }createBody();
+    
+    function createWheels(){
+      // Material setup
+const tyreMat = new BABYLON.StandardMaterial("tyreMat", scene);
+tyreMat.diffuseColor = new BABYLON.Color3(0.02, 0.02, 0.02);
+
+const rimMat = new BABYLON.StandardMaterial("rimMat", scene);
+rimMat.diffuseColor = new BABYLON.Color3(0.3, 0.3, 0.35);
+
+const spikeMat = new BABYLON.StandardMaterial("spikeMat", scene);
+spikeMat.diffuseColor = new BABYLON.Color3(0.8, 0.8, 0.85);
+
+const hubMat = new BABYLON.StandardMaterial("hubMat", scene);
+hubMat.diffuseColor = new BABYLON.Color3(0.1, 0.1, 0.1);
+
+// Function to create a detailed wheel
+function createWheel(name, radius, thickness, position, spikeCount=12) {
+    const wheel = new BABYLON.TransformNode(name, scene);
+
+    // Outer tyre (torus)
+    const tyre = BABYLON.MeshBuilder.CreateTorus(name + "_tyre", {
+        diameter: radius * 2,
+        thickness: thickness,
+        tessellation: 64
+    }, scene);
+    tyre.rotation.x = Math.PI / 2;
+    tyre.material = tyreMat;
+    tyre.parent = wheel;
+
+    // Inner rim (torus)
+    const rim = BABYLON.MeshBuilder.CreateTorus(name + "_rim", {
+        diameter: radius * 1.5,
+        thickness: thickness * 0.3,
+        tessellation: 48
+    }, scene);
+    rim.rotation.x = Math.PI / 2;
+    rim.material = rimMat;
+    rim.parent = wheel;
+
+    // Solid center disc (hub)
+    const hub = BABYLON.MeshBuilder.CreateCylinder(name + "_hub", {
+        diameter: radius * 0.6,
+        height: thickness * 0.6,
+        tessellation: 48
+    }, scene);
+    hub.rotation.x = Math.PI / 2;
+    hub.material = hubMat;
+    hub.parent = wheel;
+
+    // Spikes (connecting rim to hub)
+    const spike = BABYLON.MeshBuilder.CreateCylinder(name + "_spike", {
+        diameter: 0.05,
+        height: radius * 2
+    }, scene);
+    spike.material = spikeMat;
+    spike.parent = wheel;
+
+    // Place spikes in circular pattern
+    for (let i = 0; i < spikeCount; i++) {
+        const clone = spike.clone(name + "_spike" + i);
+        clone.rotation.y = Math.PI / 2;
+        clone.rotation.x = (i / spikeCount) * Math.PI * 2;
+    }
+    spike.setEnabled(false); // hide template
+
+    // Position whole wheel
+    wheel.position = position;
+    return wheel;
+}
+
+// Create two wheels
+const frontWheel = createWheel("frontWheel", 0.9, 0.25, new BABYLON.Vector3(-1.8, 0.5, 0), 16);
+const backWheel  = createWheel("backWheel",  0.9, 0.25, new BABYLON.Vector3( 1.8, 0.5, 0), 16);
+      
+      
+      // Fender material
+const fenderMat = new BABYLON.StandardMaterial("fenderMat", scene);
+fenderMat.diffuseColor = new BABYLON.Color3(1, 0, 0);
+fenderMat.specularColor = new BABYLON.Color3(0.9, 0.9, 0.95);
+
+// Function to create a flat curved fender (quarter of tyre)
+function createQuarterFender(name, wheelRadius, wheelPosition ,wheelRotation) {
+    // Plate thickness cross-section (rectangle)
+    const shape = [
+        new BABYLON.Vector3(-0.1, 0, 0),
+        new BABYLON.Vector3(0.1, 0, 0),
+        new BABYLON.Vector3(0.2, 0.1, 0),
+        new BABYLON.Vector3(-0.2, 0.1, 0)
+    ];
+
+    // Arc path in YZ plane (quarter circle, 90°)
+    const path = [];
+    const arcSteps = 20;
+    for (let i = 0; i <= arcSteps; i++) {
+        const angle = (i / arcSteps) * (Math.PI / 2); // 0 → 90°
+        const y = Math.cos(angle) * (wheelRadius * 1.1); // vertical
+        const z = Math.sin(angle) * (wheelRadius * 1.1); // forward
+        path.push(new BABYLON.Vector3(0, y, z));
+    }
+
+    // Extrude shape along arc path
+    const fender = BABYLON.MeshBuilder.ExtrudeShape(name, {
+        shape: shape,
+        path: path,
+        cap: BABYLON.Mesh.CAP_ALL,
+        sideOrientation: BABYLON.Mesh.DOUBLESIDE
+    }, scene);
+
+    // Rotate so it curves above tyre correctly
+    fender.rotation.y = wheelRotation;  
+    fender.position = new BABYLON.Vector3(
+        wheelPosition.x,
+        wheelPosition.y,
+        wheelPosition.z
+    );
+
+    fender.material = fenderMat;
+    return fender;
+}
+
+// Add quarter fenders
+const frontFender = createQuarterFender("frontFender", 0.9, frontWheel.position,Math.PI/2);
+const backFender  = createQuarterFender("backFender",  0.9, backWheel.position, -Math.PI/2);
+      
+      
+    }createWheels();
+    
+    return scene;
+  };
+
+  const scene = createScene();
+  
+  engine.runRenderLoop(function(){ scene.render(); });
+  window.addEventListener('resize', function(){ engine.resize(); });
+  </script></body>
+</html>

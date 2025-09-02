@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Highway Fury Moto Racing - Levels</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Animated Gradient Background */
+    body {
+      background: linear-gradient(270deg, #ffffff, #ffd700, #ff8c00, #ff0000);
+      background-size: 800% 800%;
+      animation: gradientBG 15s ease infinite;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Neon Glow Card */
+    .level-card {
+      background: linear-gradient(145deg, #ffffff, #ff8c00);
+      border: 2px solid #ff4500;
+      border-radius: 1rem;
+      box-shadow: 0 0 15px #ffd700, 0 0 30px #ff4500, 0 0 50px #ff8c00;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .level-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px #ffd700, 0 0 40px #ff4500, 0 0 70px #ff8c00;
+    }
+
+    /* Shimmer Title */
+    .shimmer-text {
+      background: linear-gradient(90deg, #ffffff, #ffd700, #ff8c00, #ff0000, #ffffff);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 3s linear infinite;
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+  </style>
+</head>
+<body class="min-h-screen p-6 flex flex-col items-center">
+
+  <!-- Page Title -->
+  <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-10 text-center tracking-wide shimmer-text drop-shadow-lg">
+    Highway Fury <span class="text-yellow-400">Levels</span>
+  </h1>
+
+  <!-- Levels Grid -->
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 w-full max-w-6xl">
+
+    <!-- Level Card Example -->
+    <a href="/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_01.html?level=1" class="level-card flex flex-col items-center justify-center py-6 px-4">
+      <span class="text-2xl md:text-3xl font-bold text-red-600">Level 1</span>
+      <p class="text-white mt-2 text-sm md:text-base">Beginner</p>
+    </a>
+
+    <a href="game.html?level=2" class="level-card flex flex-col items-center justify-center py-6 px-4">
+      <span class="text-2xl md:text-3xl font-bold text-red-600">Level 2</span>
+      <p class="text-white mt-2 text-sm md:text-base">Speed Rush</p>
+    </a>
+
+    <a href="game.html?level=3" class="level-card flex flex-col items-center justify-center py-6 px-4">
+      <span class="text-2xl md:text-3xl font-bold text-red-600">Level 3</span>
+      <p class="text-white mt-2 text-sm md:text-base">City Chase</p>
+    </a>
+
+    <a href="game.html?level=4" class="level-card flex flex-col items-center justify-center py-6 px-4">
+      <span class="text-2xl md:text-3xl font-bold text-red-600">Level 4</span>
+      <p class="text-white mt-2 text-sm md:text-base">Night Rider</p>
+    </a>
+
+    <a href="game.html?level=5" class="level-card flex flex-col items-center justify-center py-6 px-4">
+      <span class="text-2xl md:text-3xl font-bold text-red-600">Level 5</span>
+      <p class="text-white mt-2 text-sm md:text-base">Highway Sprint</p>
+    </a>
+
+    <!-- Add more levels as needed -->
+  </div>
+
+  <!-- Back Button -->
+  <a href="/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/index.html" class="mt-12 px-6 py-3 rounded-lg bg-gradient-to-r from-yellow-400 via-orange-500 to-red-600 text-white font-bold shadow-lg hover:scale-105 transition transform">
+    Back to Home
+  </a>
+
+</body>
+</html>

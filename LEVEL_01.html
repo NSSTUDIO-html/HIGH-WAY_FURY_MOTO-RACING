@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Level 1 HIGHWAY FURY(Moto Racing)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <script src="https://cdn.babylonjs.com/babylon.js"></script>
+  <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+  <style>
+    html,body { width:100%; height:100%; margin:0; padding:0; overflow:hidden; background:#111; }
+    #renderCanvas { width:100%; height:100%; touch-action:none; display:block; }
+  button{
+    position:absolute;padding:20px;box-shadow:0 0 20px black;
+    border-radius:50%;
+  }
+  
+  button:active{
+    box-shadow:0 0 40px black;
+  }
+  #handle{
+    position:absolute;
+    bottom:0px;
+    right:0px;
+    background:url('/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/MEDIA/20250901_143517.png');
+    background-size:cover;
+    background-position:center;
+    padding:40px 80px;
+  }
+  #rise{
+    position:absolute;
+    bottom:10px;
+    right:0px;
+    color:lime;
+    background:transparent;
+    border:2px solid green;
+    box-shadow:0 0 20px lime;
+    padding:10px 60px;
+    border-radius:50px;
+  }
+  #rise:active{box-shadow:0 0 40px lime;}
+  #brake{
+    position:absolute;
+    bottom:55px;
+    right:0px;
+    color: red;
+    background:transparent;
+    border:2px solid red;
+    box-shadow:0 0 20px red;
+    padding:10px 60px;
+    border-radius:50px;
+  }
+  #brake:active{
+    box-shadow:0 0 40px red;
+  }
+  #toggle{
+    position:absolute;
+    bottom:0px;
+    left:0px;
+    border:5px double black;
+    padding:35px 70px;
+    justify-content:center;
+    align-items:center;
+  }
+  #left{
+    position:absolute;
+    bottom:0px;
+    left:0px;
+    
+    border:5px solid black;
+    
+    padding:30px;
+    background:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSny0cqgzOzHZXQIQbWR7mO84zb2OJ6Kd40RNs-4rHsOV-P_aWd3THlPvE&s=10');
+    background-position:center;
+    background-size:100%;
+  }
+  #right{
+    position:absolute;
+    bottom:0px;
+    left:70px;
+    transform: rotate(180deg);
+    border:5px solid black;
+    
+    padding:30px;
+    background:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSny0cqgzOzHZXQIQbWR7mO84zb2OJ6Kd40RNs-4rHsOV-P_aWd3THlPvE&s=10');
+    background-position:center;
+    background-size:100%;
+  }
+  #pause{
+    position:absolute;
+    top:0px;
+    right:0px;
+    
+    border:5px solid black;
+    
+    padding:30px;
+    background:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVYCwFmjh6_FaIh2gga_hoGWc61dcW3yokxil-zCjAoiv7aexR2sTYDYIa&s=10');
+    background-position:center;
+    background-size:100%;
+  }
+  #horn{
+    position:absolute;
+    bottom:100px;
+    left:0px;
+    
+    border:5px solid black;
+    
+    padding:30px;
+    background:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSakaaV6qtC7DRLOHQ3ZwsZoZg1rMTMIga9fxKFSqqiIuQreqyWinskpO5a&s=10');
+    background-position:center;
+    background-size:100%;
+  }
+  #speed{
+    position:absolute;
+    bottom:100px;
+    left:70px;
+    
+    border:5px solid black;
+    
+    padding:30px;
+    background:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSHjx1qzfTXl_vBDt1PLKBTHOzBA3RisxWNEZ5O3CUYqbcXesi_7Xq14Y&s=10');
+    background-position:center;
+    background-size:100%;
+  }
+  #cam{
+    position:absolute;
+    top:0px;
+    left:0px;
+    border:5px solid black;
+    padding:30px;
+    background:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsnUS_KPY2R1wRFBIyx14aEHxfSTtvsWQTCKwBDFeI8t_yhr0VVMnrf_E&s=10');
+    background-position:center;
+    background-size:100%;
+  }
+  
+  h3{
+    border-radius:50px;
+    position:absolute;
+    top:0px;
+    right:0px;
+    color:yellow;
+    border:5px solid black;
+    padding:3px 6px;
+    text-shadow: 0 0 10px orange;
+  }
+  #meter{
+    right:20%;
+  }
+  #timer{
+    right:55%;
+  }
+  
+  </style>
+</head>
+<body>
+  <div id="handle">
+    <button id="rise">R</button>
+    <button id="brake">B</button>
+  </div>
+  <div id="toggle">
+    <button id="left"></button>
+    <button id="right"></button>
+  </div>
+  <button id="cam"></button>
+  <div>
+    <h3 id="meter">0.0 KM</h3>
+    <h3 id="timer">0.0 MIN</h3>
+  </div>
+  
+    <a href="/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/UI/PAUSE_01.html">
+      <button id="pause">
+    </button>
+    </a>
+  
+  <button id="horn"></button>
+  <button id="speed"></button>
+  
+  
+  
+  <canvas id="renderCanvas"></canvas>
+<script src="/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/ASSETS/SELECTED/SF-BIKE.js"></script>
+<script>
+  const canvas = document.getElementById("renderCanvas");
+  const engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
+  
+  const createScene = function () {
+  const scene = new BABYLON.Scene(engine);
+
+  // Camera
+  const camera = new BABYLON.ArcRotateCamera("cam", Math.PI/2, Math.PI/3, 20, new BABYLON.Vector3(0,1,0), scene);
+  camera.attachControl(canvas, true);
+  camera.wheelDeltaPercentage = 0.01;
+
+  const sun = new BABYLON.DirectionalLight("sun", new BABYLON.Vector3(-1, -2, -1), scene);
+sun.position = new BABYLON.Vector3(0, 50, 0);
+sun.intensity = 0.8;
+sun.diffuse = new BABYLON.Color3(1, 0.95, 0.8); // warm sunlight color
+sun.specular = new BABYLON.Color3(1, 1, 1);
+
+const shadowGenerator = new BABYLON.ShadowGenerator(2048, sun);
+shadowGenerator.useBlurVarianceShadowMap = true; // softer shadows
+
+
+scene.meshes.forEach(mesh => {
+  shadowGenerator.addShadowCaster(mesh);
+});
+
+const ambientLight = new BABYLON.HemisphericLight("ambient", new BABYLON.Vector3(0, 1, 0), scene);
+ambientLight.intensity = 0.3;
+ambientLight.diffuse = new BABYLON.Color3(0.6, 0.7, 1); // subtle blue sky ambient light
+
+
+sun.intensity = 1.5; // brightness
+  
+// Create a large box for the skybox
+var skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size: 10000.0 }, scene);
+
+// Create the skybox material
+var skyboxMaterial = new BABYLON.StandardMaterial("skyBoxMaterial", scene);
+
+// Disable back-face culling so inside faces show (camera is inside)
+skyboxMaterial.backFaceCulling = false;
+
+// Assign cubemap texture by providing the folder path and common prefix of the 6 faces
+skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture(
+  "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/ASSETS/Skybox/field-skyboxes/field-skyboxes/Footballfield/Footballfield",
+  scene
+);
+
+// Use skybox texture coordinates mode to paint interior of the box
+skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+
+// Disable lighting and reflections on the skybox
+skyboxMaterial.disableLighting = true;
+
+// Set diffuse and specular colors to black to avoid lighting effects
+skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+
+// Apply the material to the skybox mesh
+skybox.material = skyboxMaterial;
+
+// Keep skybox at infinite distance so it moves with the camera
+skybox.infiniteDistance = true;
+
+// Optional: Render skybox behind all other objects
+skybox.renderingGroupId = 0;
+
+  function models(){
+ 
+    function rv(){
+      // Variable declarations and constants
+const trucks = [];
+const roadLength = 40;
+const totalRoadLength = roadLength * 2;
+const speedZ = -0.8;                   // Negative value for backward movement
+const roadFrontZ = roadLength / 2;      // ~20
+const roadBackZ = roadFrontZ - totalRoadLength; // ~-60
+
+// Initial z positions for all vehicles spaced with gaps
+const initialPositionsZ = [
+  0,                // zeep.glb
+  -2,               // car_01.glb
+  -16,              // car_02.glb
+  -2,               // car_03.glb
+  -20,              // truck_01.glb
+  20,               // truck_02.glb
+  40                // truck_03.glb (assuming adding one)
+];
+
+// Vehicle data: filename, index in initialPositionsZ, positionX, scaleFactor, rotation in radians (Math.PI = 180°)
+const vehiclesToLoad = [
+  { file: "zeep.glb",       index: 0, posX: 1.5, scale: 0.9, rot: new BABYLON.Vector3(Math.PI, Math.PI/1.7, Math.PI) },
+  { file: "car_01.glb",     index: 1, posX: 1.5, scale: 0.9, rot: new BABYLON.Vector3(Math.PI, Math.PI/2, Math.PI) },
+  { file: "car_02.glb",     index: 2, posX: 1.5, scale: 0.9, rot: new BABYLON.Vector3(Math.PI, Math.PI/2.5, Math.PI) },
+  { file: "car_03.glb",     index: 3, posX: -1.5, scale: 0.9, rot: new BABYLON.Vector3(Math.PI, Math.PI/1.25, Math.PI) },
+  { file: "truck_01.glb",   index: 4, posX: -2, scale: 0.019, rot: new BABYLON.Vector3(Math.PI, 0, Math.PI) },
+  { file: "truck_02.glb",   index: 5, posX: 2.5, scale: 0.7, rot: new BABYLON.Vector3(Math.PI, 0, Math.PI) },
+  { file: "truck_03.glb",   index: 6, posX: 2.5, scale: 0.7, rot: new BABYLON.Vector3(Math.PI, 0, Math.PI) },
+];
+
+// Load all vehicles
+vehiclesToLoad.forEach((vehicle) => {
+  BABYLON.SceneLoader.ImportMeshAsync(
+    null,
+    "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/ASSETS/CONFIRMED/",
+    vehicle.file,
+    scene
+  ).then((result) => {
+    const mesh = result.meshes[0];
+    const center = mesh.getBoundingInfo().boundingBox.center;
+    mesh.setPivotPoint(center);
+    mesh.position = new BABYLON.Vector3(
+      vehicle.posX,
+      0.3,
+      initialPositionsZ[vehicle.index]
+    );
+    mesh.scaling = new BABYLON.Vector3(vehicle.scale, vehicle.scale, vehicle.scale);
+    mesh.rotation = vehicle.rot;
+    trucks.push(mesh);
+  });
+});
+
+// Animate all vehicles moving backward and looping on road
+scene.onBeforeRenderObservable.add(() => {
+  if (trucks.length < vehiclesToLoad.length) return;
+
+  trucks.forEach((mesh) => {
+    mesh.position.z += speedZ;
+    if (mesh.position.z < roadBackZ) {
+      mesh.position.z += totalRoadLength;
+    }
+  });
+});
+
+
+
+
+    }rv();
+  }models();
+  function coll(){
+    
+  }coll();
+  function acc(){
+    
+  }acc();
+    
+  // Create road boxes
+const box = BABYLON.MeshBuilder.CreateBox("box", { size: 1.6 }, scene);
+box.position = new BABYLON.Vector3(0, -0.5, 0);
+box.scaling = new BABYLON.Vector3(6, 1, 40);
+const boxMat = new BABYLON.StandardMaterial("bmat", scene);
+const texq = new BABYLON.Texture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSD62UqtitKQ-w8sAQBXeSyJiAlFuIwzDjcCVi_EY-2ekxDuulUiRKfk4M&s=10", scene);
+texq.uScale = texq.vScale = 2;
+boxMat.diffuseTexture = texq;
+box.material = boxMat;
+box.receiveShadows = true;
+
+const box1 = BABYLON.MeshBuilder.CreateBox("box1", { size: 1.6 }, scene);
+box1.position = new BABYLON.Vector3(0, -0.5, -60);
+box1.scaling = new BABYLON.Vector3(6, 1, 40);
+const boxMat1 = new BABYLON.StandardMaterial("bmat1", scene);
+const texq1 = new BABYLON.Texture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSD62UqtitKQ-w8sAQBXeSyJiAlFuIwzDjcCVi_EY-2ekxDuulUiRKfk4M&s=10", scene);
+texq1.uScale = texq1.vScale = 2;
+boxMat1.diffuseTexture = texq1;
+box1.material = boxMat1;
+box1.receiveShadows = true;
+
+// Variables for cameras
+let farCamera, nearCamera;
+
+// Import bike model
+let bikeParent = null;
+BABYLON.SceneLoader.ImportMesh(null,
+  "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/ASSETS/CONFIRMED/",
+  "2024_ducati_streetfighter_v4_s.glb",
+  scene,
+  function (meshes) {
+    bikeParent = new BABYLON.TransformNode("bikeParent", scene);
+    meshes.forEach(mesh => {
+      if (!mesh.parent) {
+        mesh.parent = bikeParent;
+      }
+    });
+    bikeParent.position = new BABYLON.Vector3(0, 0.35, 20);
+    bikeParent.scaling = new BABYLON.Vector3(1.2, 1.2, 1.2);
+    bikeParent.rotationQuaternion = BABYLON.Quaternion.RotationYawPitchRoll(-Math.PI / 2, 0, 0);
+
+    setupCamerasAndControls();
+  });
+
+// Set road boundaries (positive front edge and negative back edge)
+const roadStartZ = box.position.z + (box.scaling.z * 0.5);   // ~20
+const roadEndZ = box1.position.z - (box1.scaling.z * 0.5);    // ~-80
+
+// Clamp bike position and detect finish line in render loop
+scene.onBeforeRenderObservable.add(() => {
+  if (!bikeParent) return;
+
+  if (bikeParent.position.z > roadStartZ) {
+    bikeParent.position.z = roadStartZ;
+  }
+
+  if (bikeParent.position.z < roadEndZ) {
+    bikeParent.position.z = roadEndZ;
+    alert("You won Level 1!");
+    scene.onBeforeRenderObservable.clear();
+  }
+});
+
+// Setup cameras and toggle control
+function setupCamerasAndControls() {
+  farCamera = new BABYLON.ArcRotateCamera("farCam",
+    Math.PI / 2,
+    Math.PI / 3,
+    15,
+    bikeParent.position,
+    scene);
+  farCamera.attachControl(canvas, true);
+
+  nearCamera = new BABYLON.ArcRotateCamera("nearCam",
+    Math.PI / 2,
+    Math.PI / 3,
+    7,
+    bikeParent.position,
+    scene);
+
+  scene.activeCamera = farCamera;
+  scene.activeCamera.attachControl(canvas, true);
+
+  document.getElementById("cam").addEventListener("click", () => {
+    scene.activeCamera.detachControl(canvas);
+    if (scene.activeCamera === farCamera) {
+      scene.activeCamera = nearCamera;
+    } else {
+      scene.activeCamera = farCamera;
+    }
+    scene.activeCamera.attachControl(canvas, true);
+  });
+
+  console.log("Bike loaded; cameras ready");
+}
+
+
+
+
+
+  const riseBtn = document.getElementById("rise");
+const brakeBtn = document.getElementById("brake");
+const leftBtn = document.getElementById("left");
+const rightBtn = document.getElementById("right");
+
+let moveForward = false;
+let moveLeft = false;
+let moveRight = false;
+let braking = false; // for braking flag
+let speed = 0;
+
+const audioRise = new Audio('/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/MEDIA/AUDIOS/big-motorcycle-sound-394700.mp3');
+const audioBrake = new Audio('/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/MEDIA/AUDIOS/brake-6315.mp3');
+
+// Helper to stop actions
+function stopAllMovement() {
+  moveForward = false;
+  moveLeft = false;
+  moveRight = false;
+  braking = false;
+}
+
+// Rise - long press
+riseBtn.addEventListener("mousedown", () => {
+  moveForward = true;
+  audioRise.play();
+});
+riseBtn.addEventListener("mouseup", () => {
+  moveForward = false;
+});
+riseBtn.addEventListener("mouseleave", () => {
+  moveForward = false;
+});
+riseBtn.addEventListener("touchstart", () => {
+  moveForward = true;
+  audioRise.play();
+});
+riseBtn.addEventListener("touchend", () => {
+  moveForward = false;
+});
+riseBtn.addEventListener("touchcancel", () => {
+  moveForward = false;
+});
+
+// Brake - long press
+brakeBtn.addEventListener("mousedown", () => {
+  braking = true;
+  speed = 0;
+  audioBrake.play();
+});
+brakeBtn.addEventListener("mouseup", () => {
+  braking = false;
+});
+brakeBtn.addEventListener("mouseleave", () => {
+  braking = false;
+});
+brakeBtn.addEventListener("touchstart", () => {
+  braking = true;
+  speed = 0;
+  audioBrake.play();
+});
+brakeBtn.addEventListener("touchend", () => {
+  braking = false;
+});
+brakeBtn.addEventListener("touchcancel", () => {
+  braking = false;
+});
+
+// Left - long press
+leftBtn.addEventListener("mousedown", () => {
+  moveLeft = true;
+});
+leftBtn.addEventListener("mouseup", () => {
+  moveLeft = false;
+});
+leftBtn.addEventListener("mouseleave", () => {
+  moveLeft = false;
+});
+leftBtn.addEventListener("touchstart", () => {
+  moveLeft = true;
+});
+leftBtn.addEventListener("touchend", () => {
+  moveLeft = false;
+});
+leftBtn.addEventListener("touchcancel", () => {
+  moveLeft = false;
+});
+
+// Right - long press
+rightBtn.addEventListener("mousedown", () => {
+  moveRight = true;
+});
+rightBtn.addEventListener("mouseup", () => {
+  moveRight = false;
+});
+rightBtn.addEventListener("mouseleave", () => {
+  moveRight = false;
+});
+rightBtn.addEventListener("touchstart", () => {
+  moveRight = true;
+});
+rightBtn.addEventListener("touchend", () => {
+  moveRight = false;
+});
+rightBtn.addEventListener("touchcancel", () => {
+  moveRight = false;
+});
+
+// Movement update in render loop
+scene.onBeforeRenderObservable.add(() => {
+  if (!bikeParent) return;
+
+  if (braking) {
+    speed = 0;
+  } else if (moveForward) {
+    speed = 0.2;
+    bikeParent.position.z -= speed;
+  } else if (speed > 0) {
+    speed -= 0.01;
+    if (speed < 0) speed = 0;
+    bikeParent.position.z -= speed;
+  }
+
+  if (moveLeft) bikeParent.position.x += 0.1;
+  if (moveRight) bikeParent.position.x -= 0.1;
+});
+
+
+  function Horn(){
+    document.getElementById("horn").addEventListener("click", function() {
+  var hornSound = new Audio("/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/MEDIA/AUDIOS/FREE - Royalty free Sound effects - Bike horn.mp3");
+  hornSound.play();
+});
+
+  }Horn();
+  function aa(){
+    
+  }aa();
+  
+    
+
+
+  
+  function pap(){
+    
+  }pap();
+  function sb(){
+    
+  }sb();
+  function end(){
+    
+  }end();
+  function timer(){
+    let startTime = Date.now();
+    const timerElement = document.getElementById('timer');
+
+    function updateTimer() {
+        let elapsedMs = Date.now() - startTime;
+        let elapsedMin = elapsedMs / 60000; // convert ms to minutes
+        timerElement.textContent = elapsedMin.toFixed(1) + ' MIN';
+        requestAnimationFrame(updateTimer);
+    }
+
+    updateTimer();
+  }timer();
+  
+
+
+
+  function rl(){
+    
+  }rl();
+  
+  
+  
+  
+  // Ground
+  const ground = BABYLON.MeshBuilder.CreateGround("ground",
+    { width: 60, height: 60, subdivisions: 4 }, scene);
+
+  ground.position = new BABYLON.Vector3(0, 0, 0);
+  const groundMat = new BABYLON.StandardMaterial("groundMat", scene);
+  const tex = new BABYLON.Texture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk8NYQkghlRLfCMkFL9phZHjUAT0LqdLX2POsEE-DpJZbWlXaxCMW4POo&s=10", scene);
+  tex.uScale = tex.vScale = 1;
+  groundMat.diffuseTexture = tex;
+  ground.material = groundMat;
+  ground.receiveShadows = true;
+
+  const ground1 = BABYLON.MeshBuilder.CreateGround("ground1",
+    { width: 60, height: 60, subdivisions: 4 }, scene);
+
+  ground1.position = new BABYLON.Vector3(0, 0, -60);
+  const groundMat1 = new BABYLON.StandardMaterial("groundMat1", scene);
+  const tex1 = new BABYLON.Texture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk8NYQkghlRLfCMkFL9phZHjUAT0LqdLX2POsEE-DpJZbWlXaxCMW4POo&s=10", scene);
+  tex1.uScale = tex1.vScale = 1;
+  groundMat1.diffuseTexture = tex;
+  ground1.material = groundMat1;
+  ground1.receiveShadows = true;
+
+  
+ 
+  // ✅ Load a GLB tree model once
+BABYLON.SceneLoader.ImportMesh(
+  "",
+  "/storage/emulated/0/Download/",
+  "linden_tree.glb",
+  scene,
+  function (meshes) {
+    const tree = meshes[0];
+    tree.scaling = new BABYLON.Vector3(0.3, 0.3, 0.3);
+    tree.position = new BABYLON.Vector3(13, 0, -10);
+  
+    // 🔹 Make 20 clones along X axis
+    for (let i = 1; i < 30; i++) {
+      const clone = tree.clone("tree" + i);
+      clone.position = new BABYLON.Vector3(10,0,i * 4-90); 
+    }
+      // i*3 = spacing of 3 units between trees
+      for (let i = 1; i < 30; i++) {
+      const clone1 = tree.clone("tree1" + i);
+      clone1.position = new BABYLON.Vector3(-10,0,i * 4-90); 
+      // i*3 = spacing of 3 units between trees
+      
+      
+    }
+  }
+);
+  
+  BABYLON.SceneLoader.ImportMesh(
+  "",
+  "/storage/emulated/0/Download/",
+  "petiolate_oak_tree.glb",
+  scene,
+  function (meshes) {
+    const tree = meshes[0];
+    tree.scaling = new BABYLON.Vector3(0.3, 0.3, 0.3);
+    tree.position = new BABYLON.Vector3(13, 0, 0);
+  
+    // 🔹 Make 20 clones along X axis
+    for (let i = 1; i < 30; i++) {
+      const clone = tree.clone("tree" + i);
+      clone.position = new BABYLON.Vector3(20,0,i * 4-90); 
+    }
+      // i*3 = spacing of 3 units between trees
+      for (let i = 1; i < 30; i++) {
+      const clone1 = tree.clone("tree1" + i);
+      clone1.position = new BABYLON.Vector3(-20,0,i * 4-90); 
+      // i*3 = spacing of 3 units between trees
+      
+      
+    }
+  }
+);
+
+  // Function to load a building GLB
+function loadBuilding(fileName, position, scaling, rotation, scene) {
+    BABYLON.SceneLoader.ImportMesh(
+        "",                          // Load all meshes
+        "/storage/emulated/0/Download/",  // Folder path
+        fileName,                    // File name
+        scene,
+        function (meshes) {
+            // Group all building meshes under one parent
+            const buildingRoot = new BABYLON.TransformNode(fileName + "_root", scene);
+            meshes.forEach(m => m.parent = buildingRoot);
+
+            // Apply transformations
+            buildingRoot.position = position;
+            buildingRoot.scaling = scaling;
+            buildingRoot.rotation = rotation;
+
+            console.log(`🏢 ${fileName} added to scene!`);
+        }
+    );
+}
+
+// Load first building
+loadBuilding(
+    "wooden_house_building.glb",
+    new BABYLON.Vector3(15, 0, -20),
+    new BABYLON.Vector3(0.007, 0.007, 0.007),
+    new BABYLON.Vector3(-Math.PI / 2, Math.PI / 2, Math.PI),
+    scene
+);
+
+// Load second building
+loadBuilding(
+    "wip_-_first_building_test.glb",
+    new BABYLON.Vector3(-17, 1.5, 0), // Adjusted Y to 0 for ground alignment
+    new BABYLON.Vector3(0.7, 0.7, 0.7),
+    new BABYLON.Vector3(Math.PI, Math.PI/2, Math.PI/2), // Simplified rotation
+    scene
+);
+
+  function bikm() {
+    
+  }
+bikm();
+  
+  
+  
+  // Directional light + shadows
+  const dirLight = new BABYLON.DirectionalLight("dir", new BABYLON.Vector3(-0.5, -1, 0.3), scene);
+  dirLight.position = new BABYLON.Vector3(20, 40, -20);
+  const shadowGen = new BABYLON.ShadowGenerator(1024, dirLight);
+  shadowGen.addShadowCaster(box);
+  shadowGen.usePoissonSampling = true;
+
+    return scene;
+  };
+  const scene = createScene();
+  engine.runRenderLoop(() => scene.render());
+  // Resize
+  window.addEventListener("resize", () => engine.resize());
+  engine.runRenderLoop(() => scene.render());
+</script>
+</body>
+</html>
