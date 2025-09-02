@@ -21,7 +21,7 @@
     position:absolute;
     bottom:0px;
     right:0px;
-    background:url('/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/MEDIA/20250901_143517.png');
+    background:url('20250901_143517.png');
     background-size:cover;
     background-position:center;
     padding:40px 80px;
@@ -166,7 +166,7 @@
     <h3 id="timer">0.0 MIN</h3>
   </div>
   
-    <a href="/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/UI/PAUSE_01.html">
+    <a href="PAUSE_01.html">
       <button id="pause">
     </button>
     </a>
@@ -222,7 +222,7 @@ skyboxMaterial.backFaceCulling = false;
 
 // Assign cubemap texture by providing the folder path and common prefix of the 6 faces
 skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture(
-  "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/ASSETS/Skybox/field-skyboxes/field-skyboxes/Footballfield/Footballfield",
+  "Footballfield",
   scene
 );
 
@@ -282,7 +282,7 @@ const vehiclesToLoad = [
 vehiclesToLoad.forEach((vehicle) => {
   BABYLON.SceneLoader.ImportMeshAsync(
     null,
-    "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/ASSETS/CONFIRMED/",
+    "",
     vehicle.file,
     scene
   ).then((result) => {
@@ -351,7 +351,7 @@ let farCamera, nearCamera;
 // Import bike model
 let bikeParent = null;
 BABYLON.SceneLoader.ImportMesh(null,
-  "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/ASSETS/CONFIRMED/",
+  "",
   "2024_ducati_streetfighter_v4_s.glb",
   scene,
   function (meshes) {
@@ -435,8 +435,8 @@ let moveRight = false;
 let braking = false; // for braking flag
 let speed = 0;
 
-const audioRise = new Audio('/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/MEDIA/AUDIOS/big-motorcycle-sound-394700.mp3');
-const audioBrake = new Audio('/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/MEDIA/AUDIOS/brake-6315.mp3');
+const audioRise = new Audio('big-motorcycle-sound-394700.mp3');
+const audioBrake = new Audio('brake-6315.mp3');
 
 // Helper to stop actions
 function stopAllMovement() {
@@ -554,7 +554,7 @@ scene.onBeforeRenderObservable.add(() => {
 
   function Horn(){
     document.getElementById("horn").addEventListener("click", function() {
-  var hornSound = new Audio("/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/MEDIA/AUDIOS/FREE - Royalty free Sound effects - Bike horn.mp3");
+  var hornSound = new Audio("FREE - Royalty free Sound effects - Bike horn.mp3");
   hornSound.play();
 });
 
@@ -628,7 +628,7 @@ scene.onBeforeRenderObservable.add(() => {
   // ✅ Load a GLB tree model once
 BABYLON.SceneLoader.ImportMesh(
   "",
-  "/storage/emulated/0/Download/",
+  "",
   "linden_tree.glb",
   scene,
   function (meshes) {
@@ -654,7 +654,7 @@ BABYLON.SceneLoader.ImportMesh(
   
   BABYLON.SceneLoader.ImportMesh(
   "",
-  "/storage/emulated/0/Download/",
+  "",
   "petiolate_oak_tree.glb",
   scene,
   function (meshes) {
@@ -682,7 +682,7 @@ BABYLON.SceneLoader.ImportMesh(
 function loadBuilding(fileName, position, scaling, rotation, scene) {
     BABYLON.SceneLoader.ImportMesh(
         "",                          // Load all meshes
-        "/storage/emulated/0/Download/",  // Folder path
+        "",  // Folder path
         fileName,                    // File name
         scene,
         function (meshes) {
