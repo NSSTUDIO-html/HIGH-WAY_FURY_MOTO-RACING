@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Scene 1 HIGHWAY FURY</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <script src="https://cdn.babylonjs.com/babylon.js"></script>
+  <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+  <style>
+    html,body { width:100%; height:100%; margin:0; padding:0; overflow:hidden; background:#111; }
+    #renderCanvas { width:100%; height:100%; touch-action:none; display:block; }
+  </style>
+</head>
+<body>
+  <canvas id="renderCanvas"></canvas>
+
+<script>
+  const canvas = document.getElementById("renderCanvas");
+  const engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
+  const scene = new BABYLON.Scene(engine);
+
+  // Camera
+  const camera = new BABYLON.ArcRotateCamera("cam", Math.PI/2, Math.PI/3, 20, new BABYLON.Vector3(0,1,0), scene);
+  camera.attachControl(canvas, true);
+  camera.wheelDeltaPercentage = 0.01;
+
+  // ✅ Sunlight (Directional Light)
+const sun = new BABYLON.DirectionalLight("sun",
+    new BABYLON.Vector3(-1, -2, -1), // light direction
+    scene);
+
+sun.intensity = 1.5; // brightness
+  // Ground
+  const ground = BABYLON.MeshBuilder.CreateGround("ground",
+    { width: 60, height: 60, subdivisions: 4 }, scene);
+
+  ground.position = new BABYLON.Vector3(0, 0, 0);
+  const groundMat = new BABYLON.StandardMaterial("groundMat", scene);
+  const tex = new BABYLON.Texture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk8NYQkghlRLfCMkFL9phZHjUAT0LqdLX2POsEE-DpJZbWlXaxCMW4POo&s=10", scene);
+  tex.uScale = tex.vScale = 1;
+  groundMat.diffuseTexture = tex;
+  ground.material = groundMat;
+  ground.receiveShadows = true;
+
+  const ground1 = BABYLON.MeshBuilder.CreateGround("ground1",
+    { width: 60, height: 60, subdivisions: 4 }, scene);
+
+  ground1.position = new BABYLON.Vector3(0, 0, -60);
+  const groundMat1 = new BABYLON.StandardMaterial("groundMat1", scene);
+  const tex1 = new BABYLON.Texture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk8NYQkghlRLfCMkFL9phZHjUAT0LqdLX2POsEE-DpJZbWlXaxCMW4POo&s=10", scene);
+  tex1.uScale = tex1.vScale = 1;
+  groundMat1.diffuseTexture = tex;
+  ground1.material = groundMat1;
+  ground1.receiveShadows = true;
+
+  
+  // Example box road
+  const box = BABYLON.MeshBuilder.CreateBox("box", { size: 1.6 }, scene);
+  box.position = new BABYLON.Vector3(0, -0.5, 0);
+  box.scaling = new BABYLON.Vector3(6, 1, 40);
+  const boxMat = new BABYLON.StandardMaterial("bmat", scene);
+  const texq = new BABYLON.Texture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSD62UqtitKQ-w8sAQBXeSyJiAlFuIwzDjcCVi_EY-2ekxDuulUiRKfk4M&s=10", scene);
+  texq.uScale = texq.vScale = 2;
+  boxMat.diffuseTexture = texq;
+  box.material = boxMat;
+  box.receiveShadows = true;
+  
+  const box1 = BABYLON.MeshBuilder.CreateBox("box1", { size: 1.6 }, scene);
+  box1.position = new BABYLON.Vector3(0, -0.5, -60);
+  box1.scaling = new BABYLON.Vector3(6, 1, 40);
+  const boxMat1 = new BABYLON.StandardMaterial("bmat1", scene);
+  const texq1 = new BABYLON.Texture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSD62UqtitKQ-w8sAQBXeSyJiAlFuIwzDjcCVi_EY-2ekxDuulUiRKfk4M&s=10", scene);
+  texq1.uScale = texq1.vScale = 2;
+  boxMat1.diffuseTexture = texq1;
+  box1.material = boxMat1;
+  box1.receiveShadows = true;
+  
+  // ✅ Load a GLB tree model once
+BABYLON.SceneLoader.ImportMesh(
+  "",
+  "/storage/emulated/0/Download/",
+  "linden_tree.glb",
+  scene,
+  function (meshes) {
+    const tree = meshes[0];
+    tree.scaling = new BABYLON.Vector3(0.3, 0.3, 0.3);
+    tree.position = new BABYLON.Vector3(13, 0, -10);
+  
+    // 🔹 Make 20 clones along X axis
+    for (let i = 1; i < 30; i++) {
+      const clone = tree.clone("tree" + i);
+      clone.position = new BABYLON.Vector3(10,0,i * 4-90); 
+    }
+      // i*3 = spacing of 3 units between trees
+      for (let i = 1; i < 30; i++) {
+      const clone1 = tree.clone("tree1" + i);
+      clone1.position = new BABYLON.Vector3(-10,0,i * 4-90); 
+      // i*3 = spacing of 3 units between trees
+      
+      
+    }
+  }
+);
+  
+  BABYLON.SceneLoader.ImportMesh(
+  "",
+  "/storage/emulated/0/Download/",
+  "petiolate_oak_tree.glb",
+  scene,
+  function (meshes) {
+    const tree = meshes[0];
+    tree.scaling = new BABYLON.Vector3(0.3, 0.3, 0.3);
+    tree.position = new BABYLON.Vector3(13, 0, 0);
+  
+    // 🔹 Make 20 clones along X axis
+    for (let i = 1; i < 30; i++) {
+      const clone = tree.clone("tree" + i);
+      clone.position = new BABYLON.Vector3(20,0,i * 4-90); 
+    }
+      // i*3 = spacing of 3 units between trees
+      for (let i = 1; i < 30; i++) {
+      const clone1 = tree.clone("tree1" + i);
+      clone1.position = new BABYLON.Vector3(-20,0,i * 4-90); 
+      // i*3 = spacing of 3 units between trees
+      
+      
+    }
+  }
+);
+
+  // Function to load a building GLB
+function loadBuilding(fileName, position, scaling, rotation, scene) {
+    BABYLON.SceneLoader.ImportMesh(
+        "",                          // Load all meshes
+        "/storage/emulated/0/Download/",  // Folder path
+        fileName,                    // File name
+        scene,
+        function (meshes) {
+            // Group all building meshes under one parent
+            const buildingRoot = new BABYLON.TransformNode(fileName + "_root", scene);
+            meshes.forEach(m => m.parent = buildingRoot);
+
+            // Apply transformations
+            buildingRoot.position = position;
+            buildingRoot.scaling = scaling;
+            buildingRoot.rotation = rotation;
+
+            console.log(`🏢 ${fileName} added to scene!`);
+        }
+    );
+}
+
+// Load first building
+loadBuilding(
+    "wooden_house_building.glb",
+    new BABYLON.Vector3(15, 0, -20),
+    new BABYLON.Vector3(0.007, 0.007, 0.007),
+    new BABYLON.Vector3(-Math.PI / 2, Math.PI / 2, Math.PI),
+    scene
+);
+
+// Load second building
+loadBuilding(
+    "wip_-_first_building_test.glb",
+    new BABYLON.Vector3(-17, 1.5, 0), // Adjusted Y to 0 for ground alignment
+    new BABYLON.Vector3(0.7, 0.7, 0.7),
+    new BABYLON.Vector3(Math.PI, Math.PI/2, Math.PI/2), // Simplified rotation
+    scene
+);
+
+  function bikm() {
+    
+  }
+bikm();
+  
+  // Directional light + shadows
+  const dirLight = new BABYLON.DirectionalLight("dir", new BABYLON.Vector3(-0.5, -1, 0.3), scene);
+  dirLight.position = new BABYLON.Vector3(20, 40, -20);
+  const shadowGen = new BABYLON.ShadowGenerator(1024, dirLight);
+  shadowGen.addShadowCaster(box);
+  shadowGen.usePoissonSampling = true;
+
+  // Resize
+  window.addEventListener("resize", () => engine.resize());
+  engine.runRenderLoop(() => scene.render());
+</script>
+</body>
+</html>
