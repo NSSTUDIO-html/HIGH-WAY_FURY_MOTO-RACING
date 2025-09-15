@@ -172,7 +172,7 @@
     <h3 id="timer">0.0 MIN</h3>
   </div>
   
-    <a href="/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/UI/PAUSE_02.html">
+    <a href="PAUSE_02.html">
       <button id="pause">
     </button>
     </a>
@@ -236,7 +236,7 @@ shadowGenerator.blurKernel = 32;
 
       function Horn(){
     document.getElementById("horn").addEventListener("click", function() {
-  var hornSound = new Audio("/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/MEDIA/AUDIOS/FREE - Royalty free Sound effects - Bike horn.mp3");
+  var hornSound = new Audio("FREE - Royalty free Sound effects - Bike horn.mp3");
   hornSound.play();
 });
 
@@ -247,7 +247,7 @@ let bikeParent = null;
 
 BABYLON.SceneLoader.ImportMesh(
   null,
-  "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/ASSETS/CONFIRMED/",
+  "./",
   "2024_ducati_streetfighter_v4_s.glb",
   scene,
   function (meshes) {
@@ -352,8 +352,8 @@ let moveRight = false;
 let braking = false; // for braking flag
 let speed = 0;
 
-const audioRise = new Audio('/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/MEDIA/AUDIOS/big-motorcycle-sound-394700.mp3');
-const audioBrake = new Audio('/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/MEDIA/AUDIOS/brake-6315.mp3');
+const audioRise = new Audio('big-motorcycle-sound-394700.mp3');
+const audioBrake = new Audio('brake-6315.mp3');
 
 // Helper to stop actions
 function stopAllMovement() {
@@ -512,7 +512,7 @@ lanes.forEach((laneX, laneIdx) => {
 
     BABYLON.SceneLoader.ImportMesh(
       null,
-      "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/ASSETS/CONFIRMED/",
+      "./",
       file,
       scene,
       (meshes) => {
@@ -556,7 +556,7 @@ scene.onBeforeRenderObservable.add(() => {
       // ✅ Import tree model
       BABYLON.SceneLoader.ImportMesh(
         "",
-        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "./",
         "spruce_tree.glb",
         scene,
         function (meshes) {
@@ -582,7 +582,7 @@ scene.onBeforeRenderObservable.add(() => {
         
         BABYLON.SceneLoader.ImportMesh(
         "",
-        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "./",
         "road_traffic_barrier.glb",
         scene,
         function (meshes) {
@@ -608,7 +608,7 @@ scene.onBeforeRenderObservable.add(() => {
 
         BABYLON.SceneLoader.ImportMesh(
         "",
-        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "./",
         "coffee_stand.glb",
         scene,
         function (meshes) {
@@ -634,7 +634,7 @@ scene.onBeforeRenderObservable.add(() => {
         
         BABYLON.SceneLoader.ImportMesh(
         "",
-        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "./",
         "city_building.glb",
         scene,
         function (meshes) {
@@ -660,7 +660,7 @@ scene.onBeforeRenderObservable.add(() => {
         
         BABYLON.SceneLoader.ImportMesh(
         "",
-        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "./",
         "los_angeles_building.glb",
         scene,
         function (meshes) {
@@ -686,7 +686,7 @@ scene.onBeforeRenderObservable.add(() => {
         
         BABYLON.SceneLoader.ImportMesh(
         "",
-        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "./",
         "obelisk.glb",
         scene,
         function (meshes) {
@@ -703,7 +703,7 @@ scene.onBeforeRenderObservable.add(() => {
         
         BABYLON.SceneLoader.ImportMesh(
         "",
-        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "./",
         "egyptian_ruins.glb",
         scene,
         function (meshes) {
@@ -720,7 +720,7 @@ scene.onBeforeRenderObservable.add(() => {
         
         BABYLON.SceneLoader.ImportMesh(
         "",
-        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "./",
         "asian_shop_pack_free_gameready.glb",
         scene,
         function (meshes) {
@@ -737,7 +737,7 @@ tree1q.rotation = new BABYLON.Vector3(0, -Math.PI / 2, 0);
         
         BABYLON.SceneLoader.ImportMesh(
         "",
-        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "./",
         "medieval_cart.glb",
         scene,
         function (meshes) {
@@ -754,7 +754,7 @@ tree1q.rotation = new BABYLON.Vector3(0, -Math.PI / 2, 0);
         
         BABYLON.SceneLoader.ImportMesh(
         "",
-        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "./",
         "shop.glb",
         scene,
         function (meshes) {
@@ -771,7 +771,7 @@ tree1q.rotation = new BABYLON.Vector3(0, -Math.PI / 2, 0);
         
         BABYLON.SceneLoader.ImportMesh(
         "",
-        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "./",
         "cartoon_cyberpunk_building.glb",
         scene,
         function (meshes) {
@@ -797,7 +797,7 @@ tree1q.rotation = new BABYLON.Vector3(0, -Math.PI / 2, 0);
         
         BABYLON.SceneLoader.ImportMesh(
         "",
-        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "./",
         "house.glb",
         scene,
         function (meshes) {
