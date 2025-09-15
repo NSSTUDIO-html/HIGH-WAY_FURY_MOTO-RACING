@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Babylon.js — LEVEL_02 SCENE_HIGHWAY-FURY</title>
+
+  <!-- ✅ Babylon.js Core -->
+  <script src="https://cdn.babylonjs.com/babylon.js"></script>
+  <!-- ✅ Babylon.js Loaders (needed for .glb/.gltf) -->
+  <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+  <!-- ✅ Babylon.js GUI (optional HUD/UI) -->
+  <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
+
+  <style>
+    html,body { width:100%; height:100%; margin:0; padding:0; overflow:hidden; }
+    #renderCanvas { width:100%; height:100%; display:block; }
+  </style>
+</head>
+<body>
+  <canvas id="renderCanvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById("renderCanvas");
+    const engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
+
+    const createScene = function () {
+      const scene = new BABYLON.Scene(engine);
+
+      // Camera
+      const camera = new BABYLON.ArcRotateCamera(
+        "camera",
+        Math.PI / 2,
+        Math.PI / 2.3,
+        120,
+        new BABYLON.Vector3(0, 10, -20),
+        scene
+      );
+      camera.attachControl(canvas, true);
+      camera.lowerRadiusLimit = 40;
+      camera.upperRadiusLimit = 300;
+
+      // Light
+      const light = new BABYLON.HemisphericLight("hemiLight", new BABYLON.Vector3(0, 1, 0), scene);
+      light.intensity = 0.9;
+
+      // Ground
+      const ground = BABYLON.MeshBuilder.CreateGround("ground", { width: 1000, height: 2000 }, scene);
+      const groundMat = new BABYLON.StandardMaterial("groundMat", scene);
+      const tex1q = new BABYLON.Texture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8SKSJ5EE9rWQGhKztIfeN2HKPTxyI0m2iIi8YEmyOvGSI-zOZ0PzU_G1i&s=10", scene);
+      tex1q.uScale = tex1q.vScale = 20;
+      groundMat.diffuseTexture = tex1q;
+      ground.material = groundMat;
+      ground.receiveShadows = true;
+
+      // Example road boxes
+      const roadTexUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSD62UqtitKQ-w8sAQBXeSyJiAlFuIwzDjcCVi_EY-2ekxDuulUiRKfk4M&s=10";
+      for (let i = 0; i < 10; i++) {
+        const box = BABYLON.MeshBuilder.CreateBox("road_" + i, { size: 1.6 }, scene);
+        box.position = new BABYLON.Vector3(0, -0.3, -i * 60);
+        box.scaling = new BABYLON.Vector3(20, 1, 40);
+        const mat = new BABYLON.StandardMaterial("mat_" + i, scene);
+        const tex = new BABYLON.Texture(roadTexUrl, scene);
+        tex.uScale = tex.vScale = 2;
+        mat.diffuseTexture = tex;
+        box.material = mat;
+        box.receiveShadows = true;
+      }
+
+      // Directional light for shadows
+      const dirLight = new BABYLON.DirectionalLight("dir", new BABYLON.Vector3(-1, -2, -1), scene);
+      dirLight.position = new BABYLON.Vector3(5, 10, 5);
+      dirLight.intensity = 0.6;
+      const shadowGen = new BABYLON.ShadowGenerator(1024, dirLight);
+
+      // ✅ Import tree model
+      BABYLON.SceneLoader.ImportMesh(
+        "",
+        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "spruce_tree.glb",
+        scene,
+        function (meshes) {
+          const tree = meshes[0];  // first mesh from the glb
+          tree.scaling = new BABYLON.Vector3(1, 1, 1);
+          tree.position = new BABYLON.Vector3(0, 0.6, 50);
+
+          shadowGen.addShadowCaster(tree);
+
+          // ✅ Use clones along the road
+          for (let i = 1; i <= 50; i++) {
+            const clone = tree.clone("treeL_" + i);
+            clone.position = new BABYLON.Vector3(20, 2, i * -20+60);
+
+            const clone2 = tree.clone("treeR_" + i);
+            clone2.position = new BABYLON.Vector3(-20, 2, i * -20+60);
+
+            shadowGen.addShadowCaster(clone);
+            shadowGen.addShadowCaster(clone2);
+          }
+        }
+      );
+        
+        BABYLON.SceneLoader.ImportMesh(
+        "",
+        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "road_traffic_barrier.glb",
+        scene,
+        function (meshes) {
+          const tree1 = meshes[0];  // first mesh from the glb
+          tree1.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5);
+          tree1.position = new BABYLON.Vector3(0, 0, 50);
+
+          shadowGen.addShadowCaster(tree1);
+
+          // ✅ Use clones along the road
+          for (let i = 1; i <= 50; i++) {
+            const clone = tree1.clone("treeL_1" + i);
+            clone.position = new BABYLON.Vector3(15, 0, i * -12+40);
+
+            const clone2 = tree1.clone("treeR_1" + i);
+            clone2.position = new BABYLON.Vector3(-15, 0, i * -12+40);
+
+            shadowGen.addShadowCaster(clone);
+            shadowGen.addShadowCaster(clone2);
+          }
+        }
+      );
+
+        BABYLON.SceneLoader.ImportMesh(
+        "",
+        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "coffee_stand.glb",
+        scene,
+        function (meshes) {
+          const tree1 = meshes[0];  // first mesh from the glb
+          tree1.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5);
+          tree1.position = new BABYLON.Vector3(0, 0, 50);
+
+          shadowGen.addShadowCaster(tree1);
+
+          // ✅ Use clones along the road
+          for (let i = 1; i <= 20; i++) {
+            const clone = tree1.clone("treeL_1" + i);
+            clone.position = new BABYLON.Vector3(25, 0, i * -15+60);
+
+            const clone2 = tree1.clone("treeR_1" + i);
+            clone2.position = new BABYLON.Vector3(-25, 0, i * -15+60);
+
+            shadowGen.addShadowCaster(clone);
+            shadowGen.addShadowCaster(clone2);
+          }
+        }
+      );
+        
+        BABYLON.SceneLoader.ImportMesh(
+        "",
+        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "city_building.glb",
+        scene,
+        function (meshes) {
+          const tree1 = meshes[0];  // first mesh from the glb
+          tree1.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
+          tree1.position = new BABYLON.Vector3(-10, 0, 70);
+
+          shadowGen.addShadowCaster(tree1);
+
+          // ✅ Use clones along the road
+          for (let i = 1; i <= 5; i++) {
+            const clone = tree1.clone("treeL_1" + i);
+            clone.position = new BABYLON.Vector3(75, 0, i * -25+60);
+
+            const clone2 = tree1.clone("treeR_1" + i);
+            clone2.position = new BABYLON.Vector3(-25, 0, i * -25+60);
+
+            shadowGen.addShadowCaster(clone);
+            shadowGen.addShadowCaster(clone2);
+          }
+        }
+      );
+        
+        BABYLON.SceneLoader.ImportMesh(
+        "",
+        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "los_angeles_building.glb",
+        scene,
+        function (meshes) {
+          const tree1 = meshes[0];  // first mesh from the glb
+          tree1.scaling = new BABYLON.Vector3(0.2, 0.2, 0.2);
+          tree1.position = new BABYLON.Vector3(-10, 0.2, 70);
+
+          shadowGen.addShadowCaster(tree1);
+
+          // ✅ Use clones along the road
+          for (let i = 1; i <= 5; i++) {
+            const clone = tree1.clone("treeL_1" + i);
+            clone.position = new BABYLON.Vector3(95, 0.2, i * -25+60);
+
+            const clone2 = tree1.clone("treeR_1" + i);
+            clone2.position = new BABYLON.Vector3(-95, 0.2, i * -25+60);
+
+            shadowGen.addShadowCaster(clone);
+            shadowGen.addShadowCaster(clone2);
+          }
+        }
+      );
+        
+        BABYLON.SceneLoader.ImportMesh(
+        "",
+        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "obelisk.glb",
+        scene,
+        function (meshes) {
+          const tree1 = meshes[0];  // first mesh from the glb
+          tree1.scaling = new BABYLON.Vector3(2, 2, 2);
+          tree1.position = new BABYLON.Vector3(0, 0.2, -700);
+
+          shadowGen.addShadowCaster(tree1);
+
+          // ✅ Use clones along the road
+          
+        }
+      );
+        
+        BABYLON.SceneLoader.ImportMesh(
+        "",
+        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "egyptian_ruins.glb",
+        scene,
+        function (meshes) {
+          const tree1 = meshes[0];  // first mesh from the glb
+          tree1.scaling = new BABYLON.Vector3(2, 2, 2);
+          tree1.position = new BABYLON.Vector3(-70, 0.2, -300);
+
+          shadowGen.addShadowCaster(tree1);
+
+          // ✅ Use clones along the road
+          
+        }
+      );
+        
+        BABYLON.SceneLoader.ImportMesh(
+        "",
+        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "asian_shop_pack_free_gameready.glb",
+        scene,
+        function (meshes) {
+          const tree1q = meshes[0];  // first mesh from the glb
+          tree1q.scaling = new BABYLON.Vector3(5, 5, 5);
+          tree1q.position = new BABYLON.Vector3(80, 0.2, -300);
+tree1q.rotation = new BABYLON.Vector3(0, -Math.PI / 2, 0);
+          shadowGen.addShadowCaster(tree1q);
+
+          // ✅ Use clones along the road
+          
+        }
+      );
+        
+        BABYLON.SceneLoader.ImportMesh(
+        "",
+        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "medieval_cart.glb",
+        scene,
+        function (meshes) {
+          const tree1q = meshes[0];  // first mesh from the glb
+          tree1q.scaling = new BABYLON.Vector3(5, 5, 5);
+          tree1q.position = new BABYLON.Vector3(70, 0.2, -200);
+tree1q.rotation = new BABYLON.Vector3(0, -Math.PI / 2, 0);
+          shadowGen.addShadowCaster(tree1q);
+
+          // ✅ Use clones along the road
+          
+        }
+      );
+        
+        BABYLON.SceneLoader.ImportMesh(
+        "",
+        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "shop.glb",
+        scene,
+        function (meshes) {
+          const tree1q = meshes[0];  // first mesh from the glb
+          tree1q.scaling = new BABYLON.Vector3(5, 5, 5);
+          tree1q.position = new BABYLON.Vector3(50, 0.2, -250);
+tree1q.rotation = new BABYLON.Vector3(0, -Math.PI / 2, 0);
+          shadowGen.addShadowCaster(tree1q);
+
+          // ✅ Use clones along the road
+          
+        }
+      );
+        
+        BABYLON.SceneLoader.ImportMesh(
+        "",
+        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "cartoon_cyberpunk_building.glb",
+        scene,
+        function (meshes) {
+          const tree1q = meshes[0];  // first mesh from the glb
+          tree1q.scaling = new BABYLON.Vector3(5, 5, 5);
+          tree1q.position = new BABYLON.Vector3(80, 0.2, -300);
+tree1q.rotation = new BABYLON.Vector3(0, -Math.PI / 2, 0);
+          shadowGen.addShadowCaster(tree1q);
+
+          // ✅ Use clones along the road
+          for (let i = 1; i <= 5; i++) {
+            const clone = tree1q.clone("treeL_1" + i);
+            clone.position = new BABYLON.Vector3(95, 0.2, i * -150);
+
+            const clone2 = tree1q.clone("treeR_1" + i);
+            clone2.position = new BABYLON.Vector3(-95, 0.2, i * -150);
+
+            shadowGen.addShadowCaster(clone);
+            shadowGen.addShadowCaster(clone2);
+          }
+        }
+      );
+        
+        BABYLON.SceneLoader.ImportMesh(
+        "",
+        "/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/GAME FILES/LEVEL_02_ALL/",
+        "house.glb",
+        scene,
+        function (meshes) {
+          const tree1q = meshes[0];  // first mesh from the glb
+          tree1q.scaling = new BABYLON.Vector3(2,2,2);
+          tree1q.position = new BABYLON.Vector3(80, 0.2, -800);
+tree1q.rotation = new BABYLON.Vector3(0, -Math.PI / 2, 0);
+          shadowGen.addShadowCaster(tree1q);
+
+          // ✅ Use clones along the road
+          for (let i = 1; i <= 5; i++) {
+            const clone = tree1q.clone("treeL_1" + i);
+            clone.position = new BABYLON.Vector3(175, 0.2, i * -150);
+
+            const clone2 = tree1q.clone("treeR_1" + i);
+            clone2.position = new BABYLON.Vector3(-175, 0.2, i * -150);
+
+            shadowGen.addShadowCaster(clone);
+            shadowGen.addShadowCaster(clone2);
+          }
+        }
+      );
+        
+        
+        
+        
+
+      scene.clearColor = new BABYLON.Color3(0.8, 0.9, 1.0);
+      return scene;
+    };
+
+    const scene = createScene();
+
+    engine.runRenderLoop(function () {
+      scene.render();
+    });
+
+    window.addEventListener("resize", function () {
+      engine.resize();
+    });
+  </script>
+</body>
+</html>
