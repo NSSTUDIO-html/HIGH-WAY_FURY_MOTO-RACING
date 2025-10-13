@@ -1,0 +1,215 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Highway Fury — Game Plan</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="description" content="Design & game plan document for Highway Fury (Traffic Rider–style). Modes: Timer Mode, Levels, Free Mode" />
+</head>
+<body class="bg-gray-900 text-gray-100 leading-relaxed">
+  <div class="max-w-6xl mx-auto p-6">
+    <!-- Header -->
+    <header class="flex items-center justify-between mb-6">
+      <div>
+        <h1 class="text-3xl font-extrabold tracking-tight">Highway Fury</h1>
+        <p class="text-sm text-gray-300">Game plan & design — traffic-rider style motorcycle endless/level game</p>
+      </div>
+      <div class="text-right">
+        <span class="inline-block bg-indigo-600 px-3 py-1 rounded-full text-sm">Build: v0.1 • Design doc</span>
+      </div>
+    </header><!-- Hero / One-liner -->
+<section class="mb-8 bg-gradient-to-r from-gray-800 via-gray-700 to-black p-6 rounded-2xl shadow-lg">
+  <h2 class="text-2xl font-bold mb-2">Concept</h2>
+  <p class="text-gray-200">Highway Fury is a first-person/third-person motorcycle game inspired by Traffic Rider. Fast-paced highway runs with three core play modes: <strong>Timer Mode</strong>, <strong>Levels</strong> and <strong>Free Mode</strong>. Focus: addictive controls, responsive traffic, progressive unlocks, short sessions + leaderboard engagement.</p>
+</section>
+
+<!-- Modes -->
+<section class="mb-8">
+  <h3 class="text-xl font-semibold mb-4">Game Modes</h3>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <!-- Timer Mode -->
+    <article class="bg-gray-800 p-4 rounded-lg">
+      <h4 class="font-bold text-lg mb-2">Timer Mode</h4>
+      <p class="text-sm text-gray-300 mb-2">Survive as long as you can — each run gives you a countdown (default 60s). Score increases with distance and risky maneuvers (near-miss bonus, overtakes).</p>
+      <ul class="list-disc list-inside text-gray-300 text-sm space-y-1">
+        <li>Session length: configurable (30s, 60s, 90s)</li>
+        <li>Powerups spawn: +10s, shield, score multiplier</li>
+        <li>Leaderboards by time & score</li>
+      </ul>
+    </article>
+
+    <!-- Levels -->
+    <article class="bg-gray-800 p-4 rounded-lg">
+      <h4 class="font-bold text-lg mb-2">Levels</h4>
+      <p class="text-sm text-gray-300 mb-2">Structured progression: each level has objectives (distance, kill time, points) and unique traffic patterns, obstacles, or weather. Unlock bikes and cosmetics by completing levels.</p>
+      <ul class="list-disc list-inside text-gray-300 text-sm space-y-1">
+        <li>Worlds: City, Coastal, Desert, Night Highway</li>
+        <li>Each world: 10 levels (increasing traffic density & hazard complexity)</li>
+        <li>Level objectives and star rating (1–3)</li>
+      </ul>
+    </article>
+
+    <!-- Free Mode -->
+    <article class="bg-gray-800 p-4 rounded-lg">
+      <h4 class="font-bold text-lg mb-2">Free Mode</h4>
+      <p class="text-sm text-gray-300 mb-2">Relaxed play — no timers, no level stars. Practice handling, try new bikes, test combos and explore the map. Ideal for casual players and recording replay clips.</p>
+      <ul class="list-disc list-inside text-gray-300 text-sm space-y-1">
+        <li>Toggle traffic density & weather</li>
+        <li>Record & export short replays</li>
+        <li>Sandbox powerup toggles</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<!-- Gameplay Mechanics -->
+<section class="mb-8 bg-gray-800 p-6 rounded-lg">
+  <h3 class="text-xl font-semibold mb-4">Core Gameplay Mechanics</h3>
+  <div class="grid md:grid-cols-2 gap-6">
+    <div>
+      <h4 class="font-semibold">Controls</h4>
+      <ul class="list-disc list-inside text-gray-300 text-sm">
+        <li>Mobile: Tilt steering (accelerometer) + on-screen brake & accel buttons</li>
+        <li>Desktop: Arrow keys / A-D for steering, W for throttle, S for brake</li>
+        <li>Swipe gestures for quick lane change / nitro</li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-semibold">Physics & Feel</h4>
+      <ul class="list-disc list-inside text-gray-300 text-sm">
+        <li>Simple arcade physics (responsive steering, lean animation)</li>
+        <li>Speed cap per bike, traction differences (wet vs dry)</li>
+        <li>Collision consequences: crash animation + run ends or respawn depending on mode</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- UI Mockups -->
+<section class="mb-8">
+  <h3 class="text-xl font-semibold mb-4">UI & HUD Mockups</h3>
+  <div class="grid md:grid-cols-3 gap-4">
+    <div class="bg-gray-800 p-4 rounded-lg">
+      <div class="h-40 bg-gradient-to-b from-gray-700 to-gray-900 rounded-md flex items-center justify-center text-gray-400">Main Menu (mock)</div>
+      <ul class="text-sm text-gray-300 mt-3">
+        <li>Play → Mode select</li>
+        <li>Garage → Bikes & Skins</li>
+        <li>Leaderboards • Settings</li>
+      </ul>
+    </div>
+
+    <div class="bg-gray-800 p-4 rounded-lg">
+      <div class="h-40 rounded-md border-dashed border-2 border-gray-700 flex items-center justify-center text-gray-400">In-run HUD: Speed • Timer • Score</div>
+      <p class="text-sm text-gray-300 mt-3">Place speedometer bottom-left, score & timer top-right, nitro icon bottom-right, mini-map optional.</p>
+    </div>
+
+    <div class="bg-gray-800 p-4 rounded-lg">
+      <div class="h-40 rounded-md border-dashed border-2 border-gray-700 flex items-center justify-center text-gray-400">Pause & Level Complete</div>
+      <p class="text-sm text-gray-300 mt-3">Level complete: star rating, rewards, replay & next level buttons.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Progression & Economy -->
+<section class="mb-8 bg-gray-800 p-6 rounded-lg">
+  <h3 class="text-xl font-semibold mb-3">Progression & Rewards</h3>
+  <ul class="list-disc list-inside text-gray-300 text-sm space-y-2">
+    <li>XP & Leveling system for player profile (daily rewards at milestones)</li>
+    <li>In-game currency: Coins (earn) & Gems (premium)</li>
+    <li>Unlocks: bikes, paint jobs, nitro types, wheel effects</li>
+    <li>Daily missions (3) + weekly seasonal events</li>
+  </ul>
+</section>
+
+<!-- Level Design Table -->
+<section class="mb-8">
+  <h3 class="text-xl font-semibold mb-4">Example Level Design (World 1 — City)</h3>
+  <div class="overflow-auto rounded-lg">
+    <table class="min-w-full text-sm text-left">
+      <thead class="bg-gray-800">
+        <tr>
+          <th class="px-4 py-3">Level</th>
+          <th class="px-4 py-3">Objective</th>
+          <th class="px-4 py-3">Traffic Pattern</th>
+          <th class="px-4 py-3">Special</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="bg-gray-900 border-t border-gray-800">
+          <td class="px-4 py-2">1</td>
+          <td class="px-4 py-2">Reach 1.2 km • 1 star</td>
+          <td class="px-4 py-2">Light — buses & cars</td>
+          <td class="px-4 py-2">Day • Easy</td>
+        </tr>
+        <tr class="bg-gray-900 border-t border-gray-800">
+          <td class="px-4 py-2">2</td>
+          <td class="px-4 py-2">Overtake 12 vehicles • 2 stars</td>
+          <td class="px-4 py-2">Moderate — trucks appear</td>
+          <td class="px-4 py-2">Roadworks obstacle</td>
+        </tr>
+        <tr class="bg-gray-900 border-t border-gray-800">
+          <td class="px-4 py-2">3</td>
+          <td class="px-4 py-2">Finish under 90s • 3 stars</td>
+          <td class="px-4 py-2">Dense — aggressive cars</td>
+          <td class="px-4 py-2">Night • Rain</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Audio, Assets, Tech -->
+<section class="mb-8 bg-gray-800 p-6 rounded-lg">
+  <h3 class="text-xl font-semibold mb-3">Tech, Assets & Audio</h3>
+  <div class="grid md:grid-cols-2 gap-4 text-sm text-gray-300">
+    <div>
+      <h4 class="font-semibold">Tech Stack</h4>
+      <ul class="list-disc list-inside mt-2">
+        <li>Engine: Babylon.js or Three.js for WebGL; Unity for native builds</li>
+        <li>Backend: Node + Express for leaderboards & analytics</li>
+        <li>Analytics: Firebase / Amplitude</li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-semibold">Assets</h4>
+      <ul class="list-disc list-inside mt-2">
+        <li>Bike models (.glb/.gltf), traffic vehicle pool, road prefabs</li>
+        <li>UI sprites, particle effects (dust, sparks), nitro trails</li>
+        <li>Audio: engine loops, collisions, UI clicks, background music loop</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Monetization & Retention -->
+<section class="mb-8">
+  <h3 class="text-xl font-semibold mb-3">Monetization & Retention</h3>
+  <div class="bg-gray-800 p-4 rounded-lg text-sm text-gray-300">
+    <ul class="list-disc list-inside space-y-2">
+      <li>Free-to-play with optional ads: rewarded videos for revives, coins, +10s in Timer Mode</li>
+      <li>In-app purchases: premium bikes, cosmetics, remove ads</li>
+      <li>Events & limited-time cosmetic drops to boost engagement</li>
+    </ul>
+  </div>
+</section>
+
+<!-- TODO -->
+<section class="mb-8 bg-gradient-to-r from-indigo-900 to-indigo-700 p-4 rounded-lg">
+  <h3 class="text-lg font-semibold">Next steps / TODO</h3>
+  <ol class="list-decimal list-inside text-sm text-gray-100 mt-2 space-y-1">
+    <li>Create a minimal playable prototype (one bike + simple traffic spawner)</li>
+    <li>Implement Timer Mode and Free Mode first for rapid testing</li>
+    <li>Iterate on controls & camera feel (mobile tilt vs touch)</li>
+    <li>Design 30 levels (3 worlds) and create progression curves</li>
+  </ol>
+</section>
+
+<footer class="text-center text-sm text-gray-400 py-6">
+  <p>Made with ♥ for Highway Fury • Use this as a living design doc — adapt as you prototype.</p>
+</footer>
+
+  </div>
+</body>
+</html>
