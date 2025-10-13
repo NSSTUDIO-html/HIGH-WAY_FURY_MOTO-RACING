@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Highway Fury Moto Racing</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
     /* Animated Gradient Background */
     body {
@@ -18,27 +19,7 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Neon/Glow Button */
-    .neon-btn {
-      position: relative;
-      color: #fff;
-      border: 2px solid #ff4500;
-      background: linear-gradient(45deg, #ffd700, #ff8c00, #ff0000);
-      font-weight: bold;
-      padding: 1rem 3rem;
-      font-size: 1.25rem;
-      border-radius: 12px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      box-shadow: 0 0 15px #ffd700, 0 0 30px #ff4500, 0 0 50px #ff8c00;
-      transition: 0.3s ease-in-out;
-    }
-    .neon-btn:hover {
-      box-shadow: 0 0 25px #ffd700, 0 0 40px #ff4500, 0 0 70px #ff8c00;
-      transform: scale(1.1);
-    }
-
-    /* Title Shimmer */
+    /* Shimmer Title Effect */
     .shimmer-text {
       background: linear-gradient(90deg, #ffffff, #ffd700, #ff8c00, #ff0000, #ffffff);
       background-size: 200% 100%;
@@ -50,27 +31,64 @@
       0% { background-position: -200% 0; }
       100% { background-position: 200% 0; }
     }
+
+    /* Neon Button Style */
+    .neon-btn {
+      color: #fff;
+      border: 2px solid #ff4500;
+      background: linear-gradient(45deg, #ffd700, #ff8c00, #ff0000);
+      font-weight: bold;
+      border-radius: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      box-shadow: 0 0 15px #ffd700, 0 0 30px #ff4500, 0 0 50px #ff8c00;
+      transition: 0.3s ease-in-out;
+      text-align: center;
+      display: inline-block;
+    }
+    .neon-btn:hover {
+      box-shadow: 0 0 25px #ffd700, 0 0 40px #ff4500, 0 0 70px #ff8c00;
+      transform: scale(1.08);
+    }
+
+    /* Button Slide-in Animation */
+    @keyframes slideIn {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .slide-in {
+      animation: slideIn 1s ease forwards;
+    }
   </style>
 </head>
-<body class="flex flex-col items-center justify-center min-h-screen p-4">
 
-  <!-- Game Title -->
-  <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 text-center tracking-wide shimmer-text drop-shadow-lg">
+<body class="flex flex-col items-center justify-center min-h-screen text-center p-4">
+
+  <!-- Title -->
+  <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 shimmer-text drop-shadow-lg">
     Highway Fury <span class="text-yellow-400">Moto Racing</span>
   </h1>
 
-  <!-- Portrait Image Card -->
-  <div class="mb-10 relative w-64 sm:w-72 md:w-96 rounded-xl overflow-hidden shadow-2xl border-4 border-red-500">
+  <!-- Image Card -->
+  <div class="mb-10 relative w-64 sm:w-72 md:w-96 rounded-xl overflow-hidden shadow-2xl border-4 border-red-500 slide-in">
     <img src="IMG-20250831-WA0006.jpg" alt="Highway Fury Moto Racing" class="w-full h-auto object-cover">
-    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent p-3 sm:p-4">
+    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-3 sm:p-4">
       <p class="text-center text-white font-semibold text-md sm:text-lg md:text-xl">Feel the Rush!</p>
     </div>
   </div>
 
-  <!-- Neon Play Game Button -->
-  <a href="LEVELS.html" class="neon-btn text-sm sm:text-base md:text-lg px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-5 mb-6">
-    Play Game
-  </a>
+  <!-- Play Button -->
+  <a href="LEVELS.html"
+     class="neon-btn text-base sm:text-lg md:text-xl px-8 py-4 mb-8 slide-in"
+     style="animation-delay: 0.2s;">Play Game</a>
+
+  <!-- Other Buttons -->
+  <div class="grid grid-cols-2 gap-4 sm:gap-6 md:gap-8 slide-in" style="animation-delay: 0.4s;">
+    <a href="/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/UI/SETTINGS.html" class="neon-btn text-sm sm:text-base md:text-lg px-6 py-3">Settings</a>
+    <a href="/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/UI/LEADERBOARDS.html" class="neon-btn text-sm sm:text-base md:text-lg px-6 py-3">Leaderboards</a>
+    <a href="/storage/emulated/0/@HIGHWAY-FURY(Moto Racing)/FRONTEND/UI/GARAGE.html" class="neon-btn text-sm sm:text-base md:text-lg px-6 py-3">Garage</a>
+    <a href="GAME_PLAN.html" class="neon-btn text-sm sm:text-base md:text-lg px-6 py-3">Game Plan</a>
+  </div>
 
   <!-- Footer -->
   <footer class="mt-12 text-white/80 text-xs sm:text-sm md:text-base">
