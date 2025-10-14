@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Highway Fury - Garage</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.babylonjs.com/babylon.js"></script>
+<script src="https://cdn.babylonjs.com/loaders/babylon.glTF2FileLoader.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body {
+  /* Dark background with a slight glow effect */
+  background: radial-gradient(circle at center, #111, #000);
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  text-align: center;
+  min-height: 100vh;
+}
+h1 {
+  margin: 20px 0;
+  font-size: 2.5rem; /* Slightly larger heading */
+  color: #FFD700;
+  text-shadow: 0 0 15px #FFD700;
+}
+.garage {
+  display: grid;
+  /* Updated grid for better responsiveness and card sizing */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px; /* Increased gap */
+  padding: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.bike-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  /* Updated glow for a more premium look */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5), inset 0 0 5px rgba(255, 215, 0, 0.1);
+  backdrop-filter: blur(5px);
+  padding: 20px;
+  transition: all 0.3s ease-in-out;
+  border: 1px solid rgba(255, 215, 0, 0.1); /* Subtle border */
+}
+.bike-card.selected {
+  /* More pronounced selected state */
+  box-shadow: 0 0 30px 5px #FFD700, inset 0 0 10px #FFD700;
+  transform: scale(1.05);
+  border-color: #FFD700;
+}
+.bike-container {
+  width: 100%;
+  /* Increased height for better view of the 3D model */
+  height: 300px; 
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  background-color: rgba(0, 0, 0, 0.5); /* Dark background for 3D view */
+}
+button {
+  background: #FFD700;
+  color: black;
+  font-weight: bold;
+  border: none;
+  padding: 12px 25px; /* Slightly larger button */
+  border-radius: 12px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.1s;
+  width: 100%; /* Full width button */
+}
+button:hover {
+  background: #fff;
+  color: #111;
+  box-shadow: 0 0 10px #FFD700;
+}
+button:active {
+  transform: translateY(1px);
+}
+</style>
+</head>
+<body>
+<h1>🏍️ Highway Fury - Bike Garage</h1>
+<div class="garage">
+  <div class="bike-card" data-bike="2019_honda_monkey_125.glb">
+    <div class="bike-container">
+        <canvas id="bike1"></canvas>
+    </div>
+    <button onclick="selectBike(this)">SELECT</button>
+  </div>
+  <div class="bike-card" data-bike="2024_ducati_streetfighter_v4_s.glb">
+    <div class="bike-container">
+        <canvas id="bike2"></canvas>
+    </div>
+    <button onclick="selectBike(this)">SELECT</button>
+  </div>
+  <div class="bike-card" data-bike="bsa_motorcycle.glb">
+    <div class="bike-container">
+        <canvas id="bike3"></canvas>
+    </div>
+    <button onclick="selectBike(this)">SELECT</button>
+  </div>
+  <div class="bike-card" data-bike="harley_davidson_bike.glb">
+    <div class="bike-container">
+        <canvas id="bike4"></canvas>
+    </div>
+    <button onclick="selectBike(this)">SELECT</button>
+  </div>
+</div>
+
+<script>
+// Array to configure bikes and their canvases
+const bikes = [
+  { id: 'bike1', model: '2019_honda_monkey_125.glb' },
+  { id: 'bike2', model: '2024_ducati_streetfighter_v4_s.glb', fix: true },
+  { id: 'bike3', model: 'bsa_motorcycle.glb' },
+  { id: 'bike4', model: 'harley_davidson_bike.glb', fix: true }
+];
+
+// Start loading all bikes
+bikes.forEach(bike => loadBike(bike.id, bike.model, bike.fix || false));
+
+/**
+ * Creates an isolated Babylon.js scene for a single canvas to display a model.
+ * @param {string} canvasId - The ID of the canvas element.
+ * @param {string} modelPath - The path to the GLB model file.
+ * @param {boolean} fixProblems - Flag to apply visibility/culling fixes for specific models.
+ */
+function loadBike(canvasId, modelPath, fixProblems) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) {
+      console.error(`Canvas element with ID '${canvasId}' not found.`);
+      return;
+  }
+
+  // 1. Create a dedicated engine and scene for this canvas
+  const engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
+  const scene = new BABYLON.Scene(engine);
+  // Set a dark background color for the scene
+  scene.clearColor = new BABYLON.Color4(0.05, 0.05, 0.05, 1); 
+
+  // Camera: ArcRotateCamera is great for showroom views
+  const camera = new BABYLON.ArcRotateCamera("cam", -Math.PI/2, Math.PI/2.5, 3, new BABYLON.Vector3(0, 0.5, 0), scene);
+  // Increase sensitivity slightly for better control (though control is disabled in this use case)
+  camera.wheelPrecision = 100; 
+  // Disable user control, as it's a static display in a grid
+  camera.inputs.clear(); 
+
+  // Lights
+  // Hemispheric light for general ambient light
+  new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(0,1,0), scene).intensity = 0.5;
+  // Directional light for highlights and shadows
+  const dirLight = new BABYLON.DirectionalLight("dir", new BABYLON.Vector3(-1, -2, -1), scene);
+  dirLight.intensity = 1.2;
+  dirLight.position = new BABYLON.Vector3(5, 10, 5);
+
+
+  // Load GLB
+  BABYLON.SceneLoader.Append("", modelPath, scene, function(loadedScene){
+    // Use an isolated root node for transformations
+    const root = new BABYLON.TransformNode("root", loadedScene);
+
+    // Filter loaded meshes and parent them to the root
+    // This ensures only the newly loaded meshes are processed
+    loadedScene.meshes.filter(m => m.name !== 'default').forEach(mesh => {
+      // Ensure the mesh belongs to the current scene and hasn't been parented already
+      if (!mesh.parent) { 
+        mesh.parent = root; 
+      }
+    });
+
+    loadedScene.executeWhenReady(()=>{
+      // Calculate Bounding Box and Scale for Centering
+      let min = new BABYLON.Vector3(Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE);
+      let max = new BABYLON.Vector3(-Number.MAX_VALUE, -Number.MAX_VALUE, -Number.MAX_VALUE);
+      
+      const childMeshes = root.getChildMeshes();
+
+      if (childMeshes.length > 0) {
+        childMeshes.forEach(mesh => {
+          // --- Fix for problematic models (as per original code) ---
+          if (fixProblems) {
+            mesh.isVisible = true; // Ensure visibility
+            // Disable back face culling to fix disappearing polygons
+            if (mesh.material) {
+                mesh.material.backFaceCulling = false;
+            }
+          }
+          // --- Bounding Box Calculation ---
+          // Need to force an update if the mesh was just scaled/rotated
+          mesh.refreshBoundingInfo(true); 
+          const bbox = mesh.getBoundingInfo().boundingBox;
+          min = BABYLON.Vector3.Minimize(min, bbox.minimumWorld);
+          max = BABYLON.Vector3.Maximize(max, bbox.maximumWorld);
+        });
+
+        // 1. Calculate optimal scale
+        const size = max.subtract(min);
+        const maxDim = Math.max(size.x, size.y, size.z);
+        // Target display size is 3 units, adjusted for camera distance
+        const scale = 2.5 / maxDim; 
+        root.scaling = new BABYLON.Vector3(scale, scale, scale);
+
+        // 2. Calculate center and position
+        const center = min.add(size.scale(0.5));
+        // Recalculate position based on *unscaled* center, then apply scale adjustment
+        root.position = new BABYLON.Vector3(-center.x * scale, -center.y * scale + (maxDim * scale * 0.1), -center.z * scale);
+        // '+ (maxDim * scale * 0.1)' adjusts the bike up slightly from the exact center
+      }
+
+      // Initial rotation for a better view
+      root.rotation = new BABYLON.Vector3(0, Math.PI * 0.5, 0); 
+      
+      // Continuous Rotation Animation
+      loadedScene.registerBeforeRender(()=>{ 
+        // A slower rotation speed for a subtle effect
+        root.rotation.y += 0.005; 
+      });
+    });
+  });
+
+  // Start the dedicated render loop for this engine/scene
+  engine.runRenderLoop(()=>scene.render());
+  // Handle resize for this specific engine
+  window.addEventListener("resize",()=>engine.resize());
+}
+
+/**
+ * Handles the bike selection logic on button click.
+ * @param {HTMLButtonElement} btn - The clicked SELECT button element.
+ */
+function selectBike(btn){
+  document.querySelectorAll('.bike-card').forEach(card=>card.classList.remove('selected'));
+  const card = btn.parentElement;
+  card.classList.add('selected');
+  // Store the selected bike model path in local storage for the game to use
+  const selectedModel = card.getAttribute('data-bike');
+  localStorage.setItem('selectedBikeModel', selectedModel);
+  
+  console.log("✅ Selected Bike:", selectedModel);
+  // Optional: Redirect to game page
+  // window.location.href = 'game.html'; 
+}
+</script>
+</body>
+</html>
